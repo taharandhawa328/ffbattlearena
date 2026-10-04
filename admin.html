@@ -1,0 +1,2482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FF Battle Arena - Admin</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top right, rgba(245, 158, 11, 0.14), transparent 30%),
+                #080b12;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* ================= LOGIN ================= */
+
+        #adminLogin {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 430px;
+            background: linear-gradient(145deg, #111827, #0f172a);
+            padding: 35px;
+            border-radius: 18px;
+            border: 1px solid #334155;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+            text-align: center;
+        }
+
+        .login-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            font-size: 34px;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.25);
+        }
+
+        .login-box h1 {
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .login-box h1 span {
+            color: #fbbf24;
+        }
+
+        .login-box p {
+            color: #94a3b8;
+            margin-bottom: 25px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 13px 14px;
+            margin-bottom: 14px;
+            border-radius: 9px;
+            border: 1px solid #334155;
+            background: #080b12;
+            color: white;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .login-box input:focus {
+            border-color: #f59e0b;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 9px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #111827;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        #loginMessage {
+            margin-top: 15px;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        /* ================= DASHBOARD ================= */
+
+        #adminDashboard {
+            display: none;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.96);
+            backdrop-filter: blur(12px);
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(245, 158, 11, 0.35);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            font-size: 22px;
+        }
+
+        .brand h1 {
+            font-size: 21px;
+        }
+
+        .brand span {
+            color: #fbbf24;
+        }
+
+        .logout {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px 17px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .container {
+            width: min(1400px, 94%);
+            margin: auto;
+            padding: 35px 0 50px;
+        }
+
+        .welcome {
+            margin-bottom: 28px;
+        }
+
+        .welcome h2 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #94a3b8;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #111827, #0f172a);
+            padding: 23px;
+            border-radius: 16px;
+            border: 1px solid #273449;
+        }
+
+        .card h3 {
+            color: #94a3b8;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .number {
+            font-size: 34px;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+
+        .section {
+            margin-top: 25px;
+            background: rgba(15, 23, 42, 0.92);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid #273449;
+        }
+
+        .section-title {
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 21px;
+        }
+
+        .section-title p {
+            color: #64748b;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .btn {
+            min-height: 58px;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #111827;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #adminMessage {
+            margin-top: 22px;
+            padding: 20px;
+            background: #080b12;
+            border: 1px solid #273449;
+            border-radius: 12px;
+            display: none;
+            overflow-x: auto;
+        }
+
+        #adminMessage h3 {
+            color: #fbbf24;
+            margin-bottom: 8px;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            min-width: 750px;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 12px;
+            border-bottom: 1px solid #263244;
+            text-align: left;
+        }
+
+        .admin-table th {
+            background: #172033;
+            color: #fbbf24;
+            font-size: 13px;
+        }
+
+        .admin-table td {
+            background: #0d1421;
+        }
+
+        .coin-input {
+            width: 90px;
+            padding: 8px 10px;
+            border-radius: 7px;
+            border: 1px solid #334155;
+            background: #080b12;
+            color: white;
+        }
+
+        .add-btn {
+            margin-left: 5px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 7px;
+            background: #22c55e;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .purchase-title {
+            margin-top: 25px;
+            margin-bottom: 8px;
+            color: #fbbf24;
+        }
+
+        .empty-message {
+            color: #94a3b8;
+            margin-top: 10px;
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 18px;
+        }
+
+        .room-card {
+            background: linear-gradient(145deg, #111827, #0b1220);
+            border: 1px solid #2b394d;
+            border-radius: 13px;
+            padding: 20px;
+        }
+
+        .room-name {
+            color: #fbbf24;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .room-price {
+            margin-top: 8px;
+            color: #22c55e;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .room-id {
+            margin-top: 7px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media (max-width: 1100px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .buttons {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .room-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .header {
+                padding: 14px 16px;
+            }
+
+            .brand h1 {
+                font-size: 16px;
+            }
+
+            .cards,
+            .buttons,
+            .room-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 17px;
+            }
+
+            .login-box {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- ================= ADMIN LOGIN ================= -->
+
+<div id="adminLogin">
+
+    <div class="login-box">
+
+        <div class="login-icon">
+            👑
+        </div>
+
+        <h1>
+            FF <span>BATTLE ARENA</span>
+        </h1>
+
+        <p>
+            Admin Login
+        </p>
+
+        <input
+            type="text"
+            id="adminUsername"
+            placeholder="Admin Username"
+            autocomplete="username">
+
+        <input
+            type="password"
+            id="adminPassword"
+            placeholder="Admin Password"
+            autocomplete="current-password">
+
+        <button
+            class="login-btn"
+            onclick="adminLogin()">
+
+            LOGIN AS ADMIN
+
+        </button>
+
+        <div id="loginMessage"></div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= ADMIN DASHBOARD ================= -->
+
+<div id="adminDashboard">
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🔥
+        </div>
+
+        <h1>
+            FF <span>BATTLE ARENA</span>
+        </h1>
+
+    </div>
+
+    <button
+        class="logout"
+        onclick="logoutAdmin()">
+
+        LOGOUT
+
+    </button>
+
+</header>
+
+
+<main class="container">
+
+    <div class="welcome">
+
+        <h2>
+            Admin Dashboard 👑
+        </h2>
+
+        <p>
+            Welcome Admin — yahan se FF Battle Arena manage karein.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>TOTAL USERS</h3>
+            <div class="number" id="totalUsers">0</div>
+        </div>
+
+        <div class="card">
+            <h3>TOTAL COINS</h3>
+            <div class="number" id="totalCoins">0</div>
+        </div>
+
+        <div class="card">
+            <h3>TOTAL ROOMS</h3>
+            <div class="number" id="totalRooms">0</div>
+        </div>
+
+        <div class="card">
+            <h3>COIN PURCHASES</h3>
+            <div class="number" id="totalPurchases">0</div>
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <div class="section-title">
+
+            <h2>⚙️ Admin Controls</h2>
+
+            <p>
+                Website ke users, coins, rooms aur payments manage karein.
+            </p>
+
+        </div>
+
+
+        <div class="buttons">
+
+            <button class="btn" onclick="openUsers()">
+                👥 USERS
+            </button>
+
+            <button class="btn" onclick="openPaymentProofs()">
+                📸 PAYMENT PROOFS
+            </button>
+
+            <button class="btn" onclick="openCoins()">
+                💰 COINS
+            </button>
+
+            <button class="btn" onclick="openRooms()">
+                🏠 ROOMS
+            </button>
+
+            <button class="btn" onclick="openPurchases()">
+                💳 PURCHASES
+            </button>
+            <button class="btn" onclick="openWithdrawals()">
+    💸 WITHDRAWALS
+</button>
+
+        </div>
+
+        <div id="adminMessage"></div>
+
+    </div>
+
+</main>
+
+</div>
+
+
+<script>
+
+/* ==================================================
+   ADMIN LOGIN
+================================================== */
+
+async function adminLogin() {
+
+    const username =
+        document.getElementById("adminUsername").value.trim();
+
+    const password =
+        document.getElementById("adminPassword").value;
+
+    const message =
+        document.getElementById("loginMessage");
+
+
+    if (!username || !password) {
+
+        message.textContent =
+            "Username aur password dono enter karein.";
+
+        message.style.color = "#ef4444";
+
+        return;
+    }
+
+
+    message.textContent =
+        "Logging in...";
+
+    message.style.color =
+        "#fbbf24";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin-login",
+                {
+                    method: "POST",
+
+                    credentials: "same-origin",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        username:
+                            username,
+
+                        password:
+                            password
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            message.textContent =
+                data.message ||
+                "Admin login failed.";
+
+            message.style.color =
+                "#ef4444";
+
+            return;
+        }
+
+
+        message.textContent =
+            "✅ Admin login successful.";
+
+        message.style.color =
+            "#22c55e";
+
+
+        setTimeout(
+            function () {
+
+                showAdminDashboard();
+
+            },
+            400
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Admin login error:",
+            error
+        );
+
+
+        message.textContent =
+            "Server se connection nahi ho raha.";
+
+        message.style.color =
+            "#ef4444";
+    }
+}
+
+
+/* ==================================================
+   SHOW DASHBOARD
+================================================== */
+
+function showAdminDashboard() {
+
+    document.getElementById(
+        "adminLogin"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "adminDashboard"
+    ).style.display = "block";
+
+
+    loadAdminStats();
+}
+
+
+/* ==================================================
+   CHECK ADMIN SESSION
+================================================== */
+
+async function checkAdminSession() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin/status",
+                {
+                    method: "GET",
+                    credentials: "same-origin"
+                }
+            );
+
+
+        if (!response.ok) {
+            return false;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+            return false;
+        }
+
+
+        return true;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Admin session check error:",
+            error
+        );
+
+        return false;
+    }
+}
+
+
+/* ==================================================
+   UNAUTHORIZED
+================================================== */
+
+async function handleAdminUnauthorized(response) {
+
+    if (response.status === 401) {
+
+        alert(
+            "Admin session expire ho gaya. Dobara login karein."
+        );
+
+
+        document.getElementById(
+            "adminDashboard"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "adminLogin"
+        ).style.display = "flex";
+
+
+        return true;
+    }
+
+
+    return false;
+}
+
+
+/* ==================================================
+   USERS
+================================================== */
+
+async function openUsers() {
+
+    const box =
+        document.getElementById(
+            "adminMessage"
+        );
+
+
+    box.style.display = "block";
+
+    box.innerHTML =
+        "👥 Users loading...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin/users",
+                {
+                    credentials:
+                        "same-origin"
+                }
+            );
+
+
+        if (
+            await handleAdminUnauthorized(
+                response
+            )
+        ) {
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            box.textContent =
+                data.message ||
+                "Users load nahi ho rahe.";
+
+            return;
+        }
+
+
+        if (
+            !data.users ||
+            data.users.length === 0
+        ) {
+
+            box.textContent =
+                "Abhi koi registered user nahi hai.";
+
+            return;
+        }
+
+
+        let html = `
+            <h3>👥 Registered Users</h3>
+
+            <table class="admin-table">
+
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Coins</th>
+                    <th>Created</th>
+                </tr>
+        `;
+
+
+        data.users.forEach(
+            function (user) {
+
+                html += `
+                    <tr>
+
+                        <td>
+                            ${user.id}
+                        </td>
+
+                        <td>
+                            ${user.username}
+                        </td>
+
+                        <td>
+                            ${user.email}
+                        </td>
+
+                        <td style="
+                            color:#fbbf24;
+                            font-weight:bold;
+                        ">
+                            🪙 ${user.coins}
+                        </td>
+
+                        <td>
+                            ${user.created_at}
+                        </td>
+
+                    </tr>
+                `;
+            }
+        );
+
+
+        html += `</table>`;
+
+
+        box.innerHTML =
+            html;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Users error:",
+            error
+        );
+
+
+        box.textContent =
+            "Server se connection nahi ho raha.";
+    }
+}
+
+
+/* ==================================================
+   COINS
+================================================== */
+
+async function openCoins() {
+
+    const box =
+        document.getElementById(
+            "adminMessage"
+        );
+
+
+    box.style.display =
+        "block";
+
+
+    box.innerHTML =
+        "💰 Coins loading...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin/users",
+                {
+                    credentials:
+                        "same-origin"
+                }
+            );
+
+
+        if (
+            await handleAdminUnauthorized(
+                response
+            )
+        ) {
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            box.textContent =
+                data.message ||
+                "Users load nahi ho rahe.";
+
+            return;
+        }
+
+
+        if (
+            !data.users ||
+            data.users.length === 0
+        ) {
+
+            box.textContent =
+                "Abhi koi registered user nahi hai.";
+
+            return;
+        }
+
+
+        let html = `
+            <h3>💰 Coin Management</h3>
+
+            <p style="
+                margin-top:8px;
+                color:#94a3b8;
+            ">
+                Yahan se kisi user ke account mein coins add kar sakte hain.
+            </p>
+
+            <table class="admin-table">
+
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Current Coins</th>
+                    <th>Add Coins</th>
+                </tr>
+        `;
+
+
+        data.users.forEach(
+            function (user) {
+
+                html += `
+                    <tr>
+
+                        <td>
+                            ${user.id}
+                        </td>
+
+                        <td>
+                            ${user.username}
+                        </td>
+
+                        <td style="
+                            color:#fbbf24;
+                            font-weight:bold;
+                        ">
+                            🪙 ${user.coins}
+                        </td>
+
+                        <td>
+
+                            <input
+                                type="number"
+                                id="coins-${user.id}"
+                                class="coin-input"
+                                min="1"
+                                placeholder="Coins">
+
+                            <button
+                                class="add-btn"
+                                onclick="addAdminCoins(${user.id})">
+                                ADD
+                            </button>
+
+                        </td>
+
+                    </tr>
+                `;
+            }
+        );
+
+
+        html += `</table>`;
+
+
+        box.innerHTML =
+            html;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Coin management error:",
+            error
+        );
+
+
+        box.textContent =
+            "Server se connection nahi ho raha.";
+    }
+}
+
+
+/* ==================================================
+   ADD COINS
+================================================== */
+
+async function addAdminCoins(userId) {
+
+    const input =
+        document.getElementById(
+            "coins-" + userId
+        );
+
+
+    if (!input) {
+
+        alert(
+            "Coin input nahi mila."
+        );
+
+        return;
+    }
+
+
+    const coins =
+        Number(input.value);
+
+
+    if (
+        !Number.isInteger(coins) ||
+        coins < 1
+    ) {
+
+        alert(
+            "Please 1 ya us se zyada valid coins enter karo."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin/add-coins",
+                {
+                    method: "POST",
+
+                    credentials:
+                        "same-origin",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        userId:
+                            userId,
+
+                        coins:
+                            coins
+
+                    })
+                }
+            );
+
+
+        if (
+            await handleAdminUnauthorized(
+                response
+            )
+        ) {
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            alert(
+                data.message ||
+                "Coins add nahi hue."
+            );
+
+            return;
+        }
+
+
+        alert(
+            "✅ Coins successfully add ho gaye!\n\n" +
+            data.user.username +
+            " ke total coins: " +
+            data.user.coins
+        );
+
+
+        input.value =
+            "";
+
+
+        await openCoins();
+
+        await loadAdminStats();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Add coins error:",
+            error
+        );
+
+
+        alert(
+            "Server se connection nahi ho raha."
+        );
+    }
+}
+
+
+/* ==================================================
+   ROOMS
+================================================== */
+
+async function openRooms() {
+
+    const box =
+        document.getElementById(
+            "adminMessage"
+        );
+
+
+    box.style.display =
+        "block";
+
+
+    box.innerHTML =
+        "🏠 Rooms loading...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/rooms",
+                {
+                    credentials:
+                        "same-origin"
+                }
+            );
+
+
+        if (
+            await handleAdminUnauthorized(
+                response
+            )
+        ) {
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            box.textContent =
+                data.message ||
+                "Rooms load nahi ho rahe.";
+
+            return;
+        }
+
+
+        const rooms =
+            Array.isArray(data)
+                ? data
+                : data.rooms;
+
+
+        if (
+            !rooms ||
+            rooms.length === 0
+        ) {
+
+            box.innerHTML = `
+                <h3>🏠 Room Management</h3>
+
+                <p class="empty-message">
+                    Abhi koi room available nahi hai.
+                </p>
+            `;
+
+            return;
+        }
+
+
+        let html = `
+            <h3>🏠 Room Management</h3>
+
+            <p style="
+                margin-top:8px;
+                color:#94a3b8;
+            ">
+                Website par available rooms aur unki coin prices.
+            </p>
+
+            <div class="room-grid">
+        `;
+
+
+        rooms.forEach(
+            function (room) {
+
+                html += `
+                    <div class="room-card">
+
+                        <div class="room-name">
+                            ${room.name}
+                        </div>
+
+                        <div class="room-price">
+                            🪙 ${room.price} Coins
+                        </div>
+
+                        <div class="room-id">
+                            Room ID: ${room.id}
+                        </div>
+
+                    </div>
+                `;
+            }
+        );
+
+
+        html += `</div>`;
+
+
+        box.innerHTML =
+            html;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Rooms error:",
+            error
+        );
+
+
+        box.innerHTML = `
+            <h3>🏠 Room Management</h3>
+
+            <p style="
+                margin-top:10px;
+                color:#ef4444;
+            ">
+                Server se connection nahi ho raha.
+            </p>
+        `;
+    }
+}
+
+
+/* ==================================================
+   PURCHASE HISTORY
+================================================== */
+
+async function openPurchases() {
+
+    const box =
+        document.getElementById(
+            "adminMessage"
+        );
+
+
+    box.style.display =
+        "block";
+
+
+    box.innerHTML =
+        "💳 Purchase History loading...";
+
+
+    try {
+
+        const coinResponse =
+            await fetch(
+                "/api/admin/coin-purchases",
+                {
+                    credentials:
+                        "same-origin"
+                }
+            );
+
+
+        if (
+            await handleAdminUnauthorized(
+                coinResponse
+            )
+        ) {
+            return;
+        }
+
+
+        const coinData =
+            await coinResponse.json();
+
+
+        const roomResponse =
+            await fetch(
+                "/api/admin/room-purchases",
+                {
+                    credentials:
+                        "same-origin"
+                }
+            );
+
+
+        if (
+            await handleAdminUnauthorized(
+                roomResponse
+            )
+        ) {
+            return;
+        }
+
+
+        const roomData =
+            await roomResponse.json();
+
+
+        let html = `
+            <h3>💳 Purchase History</h3>
+
+            <h3 class="purchase-title">
+                💰 Coin Purchases
+            </h3>
+        `;
+
+
+        if (
+            coinResponse.ok &&
+            coinData.success &&
+            coinData.purchases &&
+            coinData.purchases.length > 0
+        ) {
+
+            html += `
+                <table class="admin-table">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Coins</th>
+                        <th>Date</th>
+                    </tr>
+            `;
+
+
+            coinData.purchases.forEach(
+                function (purchase) {
+
+                    html += `
+                        <tr>
+
+                            <td>
+                                ${purchase.id}
+                            </td>
+
+                            <td>
+                                ${purchase.user_id}
+                            </td>
+
+                            <td>
+                                ${purchase.username}
+                            </td>
+
+                            <td>
+                                ${purchase.email}
+                            </td>
+
+                            <td style="
+                                color:#fbbf24;
+                                font-weight:bold;
+                            ">
+                                🪙 ${purchase.coins}
+                            </td>
+
+                            <td>
+                                ${purchase.purchased_at}
+                            </td>
+
+                        </tr>
+                    `;
+                }
+            );
+
+
+            html += `</table>`;
+
+        }
+
+        else {
+
+            html += `
+                <p class="empty-message">
+                    Abhi koi coin purchase nahi hui.
+                </p>
+            `;
+        }
+
+
+        html += `
+            <h3 class="purchase-title">
+                🏠 Room Purchases
+            </h3>
+        `;
+
+
+        if (
+            roomResponse.ok &&
+            roomData.success &&
+            roomData.purchases &&
+            roomData.purchases.length > 0
+        ) {
+
+            html += `
+                <table class="admin-table">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Room</th>
+                        <th>Price</th>
+                        <th>Date</th>
+                    </tr>
+            `;
+
+
+            roomData.purchases.forEach(
+                function (purchase) {
+
+                    html += `
+                        <tr>
+
+                            <td>
+                                ${purchase.id}
+                            </td>
+
+                            <td>
+                                ${purchase.user_id}
+                            </td>
+
+                            <td>
+                                ${purchase.username}
+                            </td>
+
+                            <td>
+                                ${purchase.email}
+                            </td>
+
+                            <td style="
+                                color:#fbbf24;
+                                font-weight:bold;
+                            ">
+                                ${purchase.room_name}
+                            </td>
+
+                            <td>
+                                ${purchase.price} coins
+                            </td>
+
+                            <td>
+                                ${purchase.purchased_at}
+                            </td>
+
+                        </tr>
+                    `;
+                }
+            );
+
+
+            html += `</table>`;
+
+        }
+
+        else {
+
+            html += `
+                <p class="empty-message">
+                    Abhi koi room purchase nahi hui.
+                </p>
+            `;
+        }
+
+
+        box.innerHTML =
+            html;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Purchase history error:",
+            error
+        );
+
+
+        box.innerHTML = `
+            <h3>💳 Purchase History</h3>
+
+            <p style="
+                margin-top:10px;
+                color:#ef4444;
+            ">
+                Server se connection nahi ho raha.
+            </p>
+        `;
+    }
+}
+
+
+/* ==================================================
+   PAYMENT PROOFS
+================================================== */
+
+async function openPaymentProofs() {
+
+    const box =
+        document.getElementById(
+            "adminMessage"
+        );
+
+
+    box.style.display =
+        "block";
+
+
+    box.innerHTML =
+        "📸 Payment proofs loading...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin/payment-proofs",
+                {
+                    credentials:
+                        "same-origin"
+                }
+            );
+
+
+        if (
+            await handleAdminUnauthorized(
+                response
+            )
+        ) {
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            box.textContent =
+                data.message ||
+                "Payment proofs load nahi ho rahe.";
+
+            return;
+        }
+
+
+        if (
+            !data.proofs ||
+            data.proofs.length === 0
+        ) {
+
+            box.innerHTML = `
+                <h3>📸 Payment Verification</h3>
+
+                <p class="empty-message">
+                    Abhi koi payment proof submit nahi hua.
+                </p>
+            `;
+
+            return;
+        }
+
+
+        let html = `
+            <h3>📸 Payment Verification</h3>
+
+            <p style="
+                margin-top:8px;
+                color:#94a3b8;
+            ">
+                Pending payments ko check karke Approve ya Reject karein.
+            </p>
+
+            <table class="admin-table">
+
+                <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Coins</th>
+                    <th>Proof</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+        `;
+
+
+        data.proofs.forEach(
+            function (proof) {
+
+                let actionButtons =
+                    "";
+
+
+                if (
+                    proof.status ===
+                    "pending"
+                ) {
+
+                    actionButtons = `
+                        <button
+                            onclick="approvePayment(${proof.id})"
+                            style="
+                                background:#22c55e;
+                                color:white;
+                                border:none;
+                                padding:8px 12px;
+                                border-radius:6px;
+                                cursor:pointer;
+                                font-weight:bold;
+                                margin-right:5px;
+                            ">
+                            ✅ APPROVE
+                        </button>
+
+                        <button
+                            onclick="rejectPayment(${proof.id})"
+                            style="
+                                background:#ef4444;
+                                color:white;
+                                border:none;
+                                padding:8px 12px;
+                                border-radius:6px;
+                                cursor:pointer;
+                                font-weight:bold;
+                            ">
+                            ❌ REJECT
+                        </button>
+                    `;
+
+                }
+
+                else {
+
+                    actionButtons = `
+                        <span style="color:#94a3b8;">
+                            Processed
+                        </span>
+                    `;
+                }
+
+
+                html += `
+                    <tr>
+
+                        <td>
+                            ${proof.id}
+                        </td>
+
+                        <td>
+                            ${proof.username}
+                        </td>
+
+                        <td>
+                            ${proof.email}
+                        </td>
+
+                        <td style="
+                            color:#fbbf24;
+                            font-weight:bold;
+                        ">
+                            🪙 ${proof.coins}
+                        </td>
+
+                        <td>
+                            <a
+                                href="/api/admin/payment-proofs/${proof.id}/image"
+                                target="_blank"
+                                style="
+                                    color:#00d9ff;
+                                    font-weight:bold;
+                                ">
+                                🖼️ VIEW PROOF
+                            </a>
+                        </td>
+
+                        <td>
+                            ${proof.status}
+                        </td>
+
+                        <td>
+                            ${actionButtons}
+                        </td>
+
+                    </tr>
+                `;
+            }
+        );
+
+
+        html += `</table>`;
+
+
+        box.innerHTML =
+            html;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Payment proofs error:",
+            error
+        );
+
+
+        box.innerHTML = `
+            <h3>📸 Payment Verification</h3>
+
+            <p style="color:#ef4444;">
+                Server se connection nahi ho raha.
+            </p>
+        `;
+    }
+}
+
+
+/* ==================================================
+   APPROVE PAYMENT
+================================================== */
+
+async function approvePayment(proofId) {
+
+    if (
+        !confirm(
+            "Kya aap is payment ko APPROVE karna chahte hain?"
+        )
+    ) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/payment-proofs/${proofId}/approve`,
+                {
+                    method: "POST",
+                    credentials:
+                        "same-origin"
+                }
+            );
+
+
+        if (
+            await handleAdminUnauthorized(
+                response
+            )
+        ) {
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            alert(
+                data.message ||
+                "Payment approve nahi hui."
+            );
+
+            return;
+        }
+
+
+        alert(
+            "✅ " + data.message
+        );
+
+
+        await openPaymentProofs();
+
+        await loadAdminStats();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Approve payment error:",
+            error
+        );
+
+
+        alert(
+            "Server se connection nahi ho raha."
+        );
+    }
+}
+
+
+/* ==================================================
+   REJECT PAYMENT
+================================================== */
+
+async function rejectPayment(proofId) {
+
+    if (
+        !confirm(
+            "Kya aap is payment ko REJECT karna chahte hain?"
+        )
+    ) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/payment-proofs/${proofId}/reject`,
+                {
+                    method: "POST",
+                    credentials:
+                        "same-origin"
+                }
+            );
+
+
+        if (
+            await handleAdminUnauthorized(
+                response
+            )
+        ) {
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            alert(
+                data.message ||
+                "Payment reject nahi hui."
+            );
+
+            return;
+        }
+
+
+        alert(
+            "❌ " + data.message
+        );
+
+
+        await openPaymentProofs();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Reject payment error:",
+            error
+        );
+
+
+        alert(
+            "Server se connection nahi ho raha."
+        );
+    }
+}
+
+
+/* ==================================================
+   LOGOUT
+================================================== */
+
+async function logoutAdmin() {
+
+    try {
+
+        await fetch(
+            "/api/admin-logout",
+            {
+                method: "POST",
+                credentials:
+                    "same-origin"
+            }
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+    }
+
+
+    document.getElementById(
+        "adminDashboard"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "adminLogin"
+    ).style.display =
+        "flex";
+
+
+    document.getElementById(
+        "adminUsername"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "adminPassword"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "loginMessage"
+    ).textContent =
+        "";
+}
+
+
+/* ==================================================
+   LOAD STATS
+================================================== */
+
+async function loadAdminStats() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin/stats",
+                {
+                    credentials:
+                        "same-origin"
+                }
+            );
+
+
+        if (
+            await handleAdminUnauthorized(
+                response
+            )
+        ) {
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+            return;
+        }
+
+
+        document.getElementById(
+            "totalUsers"
+        ).textContent =
+            data.totalUsers;
+
+
+        document.getElementById(
+            "totalCoins"
+        ).textContent =
+            data.totalCoins;
+
+
+        document.getElementById(
+            "totalRooms"
+        ).textContent =
+            data.totalRooms;
+
+
+        document.getElementById(
+            "totalPurchases"
+        ).textContent =
+            data.coinPurchases;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Admin stats error:",
+            error
+        );
+    }
+}
+
+
+/* ==================================================
+   START
+================================================== */
+
+async function startAdmin() {
+
+    const loggedIn =
+        await checkAdminSession();
+
+
+    if (loggedIn) {
+
+        showAdminDashboard();
+
+    }
+
+    else {
+
+        document.getElementById(
+            "adminLogin"
+        ).style.display =
+            "flex";
+
+
+        document.getElementById(
+            "adminDashboard"
+        ).style.display =
+            "none";
+    }
+}
+
+
+startAdmin();
+/* ==================================================
+   WITHDRAWAL REQUESTS
+================================================== */
+
+async function openWithdrawals() {
+
+    const box = document.getElementById("adminMessage");
+
+    box.style.display = "block";
+
+    box.innerHTML = "💸 Withdrawal requests loading...";
+
+    try {
+
+        const response = await fetch(
+            "/api/admin/withdrawals",
+            {
+                credentials: "same-origin"
+            }
+        );
+
+        if (await handleAdminUnauthorized(response)) {
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+
+            box.innerHTML = `
+                <h3>💸 Withdrawal Requests</h3>
+
+                <p style="color:#ef4444;">
+                    ${data.message ||
+                    "Withdrawal requests load nahi ho rahe."}
+                </p>
+            `;
+
+            return;
+        }
+
+        if (!data.withdrawals ||
+            data.withdrawals.length === 0) {
+
+            box.innerHTML = `
+                <h3>💸 Withdrawal Requests</h3>
+
+                <p class="empty-message">
+                    Abhi koi withdrawal request nahi hai.
+                </p>
+            `;
+
+            return;
+        }
+
+        let html = `
+            <h3>💸 Withdrawal Requests</h3>
+
+            <table class="admin-table">
+
+                <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Coins</th>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>Account</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+        `;
+
+        data.withdrawals.forEach(function (withdrawal) {
+
+            let actionButtons = "";
+
+            if (withdrawal.status === "pending") {
+
+                actionButtons = `
+                    <button
+                        onclick="approveWithdrawal(${withdrawal.id})"
+                        style="
+                            background:#22c55e;
+                            color:white;
+                            border:none;
+                            padding:8px 12px;
+                            border-radius:6px;
+                            cursor:pointer;
+                            font-weight:bold;
+                        ">
+                        ✅ APPROVE
+                    </button>
+
+                    <button
+                        onclick="rejectWithdrawal(${withdrawal.id})"
+                        style="
+                            background:#ef4444;
+                            color:white;
+                            border:none;
+                            padding:8px 12px;
+                            border-radius:6px;
+                            cursor:pointer;
+                            font-weight:bold;
+                            margin-top:5px;
+                        ">
+                        ❌ REJECT
+                    </button>
+                `;
+
+            } else {
+
+                actionButtons = `
+                    <span style="color:#94a3b8;">
+                        Processed
+                    </span>
+                `;
+            }
+
+            html += `
+                <tr>
+
+                    <td>${withdrawal.id}</td>
+
+                    <td>${withdrawal.username}</td>
+
+                    <td>${withdrawal.email}</td>
+
+                    <td style="
+                        color:#fbbf24;
+                        font-weight:bold;
+                    ">
+                        🪙 ${withdrawal.coins}
+                    </td>
+
+                    <td style="
+                        color:#22c55e;
+                        font-weight:bold;
+                    ">
+                        Rs ${withdrawal.amount}
+                    </td>
+
+                    <td>${withdrawal.method}</td>
+
+                    <td>${withdrawal.account_number}</td>
+
+                    <td>${withdrawal.status}</td>
+
+                    <td>${withdrawal.requested_at}</td>
+
+                    <td>${actionButtons}</td>
+
+                </tr>
+            `;
+        });
+
+        html += `</table>`;
+
+        box.innerHTML = html;
+
+    } catch (error) {
+
+        console.error(
+            "Withdrawal requests error:",
+            error
+        );
+
+        box.innerHTML = `
+            <h3>💸 Withdrawal Requests</h3>
+
+            <p style="color:#ef4444;">
+                Server se connection nahi ho raha.
+            </p>
+        `;
+    }
+}
+/* ==================================================
+   APPROVE WITHDRAWAL
+================================================== */
+
+async function approveWithdrawal(withdrawalId) {
+
+    if (!confirm(
+        "Kya aap is withdrawal ko APPROVE karna chahte hain?"
+    )) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `/api/admin/withdrawals/${withdrawalId}/approve`,
+            {
+                method: "POST",
+                credentials: "same-origin"
+            }
+        );
+
+        if (
+            await handleAdminUnauthorized(response)
+        ) {
+            return;
+        }
+
+        const data = await response.json();
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            alert(
+                data.message ||
+                "Withdrawal approve nahi hui."
+            );
+
+            return;
+        }
+
+        alert(
+            "✅ " + data.message
+        );
+
+        await openWithdrawals();
+
+        await loadAdminStats();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Approve withdrawal error:",
+            error
+        );
+
+        alert(
+            "Server se connection nahi ho raha."
+        );
+    }
+}
+
+
+/* ==================================================
+   REJECT WITHDRAWAL
+================================================== */
+
+async function rejectWithdrawal(withdrawalId) {
+
+    if (!confirm(
+        "Kya aap is withdrawal ko REJECT karna chahte hain?"
+    )) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `/api/admin/withdrawals/${withdrawalId}/reject`,
+            {
+                method: "POST",
+                credentials: "same-origin"
+            }
+        );
+
+        if (
+            await handleAdminUnauthorized(response)
+        ) {
+            return;
+        }
+
+        const data = await response.json();
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            alert(
+                data.message ||
+                "Withdrawal reject nahi hui."
+            );
+
+            return;
+        }
+
+        alert(
+            "❌ " + data.message
+        );
+
+        await openWithdrawals();
+
+        await loadAdminStats();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Reject withdrawal error:",
+            error
+        );
+
+        alert(
+            "Server se connection nahi ho raha."
+        );
+    }
+}
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,3918 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>FF Battle Arena</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+        }
+
+
+        /* ================================
+           SCREENS
+        ================================= */
+
+        .page-screen {
+            min-height: 100vh;
+        }
+
+        #home {
+            display: flex;
+        }
+
+        #register,
+        #login,
+        #coins,
+        #rooms,
+        #dashboard {
+            display: none;
+        }
+
+
+        /* ================================
+           FORMS
+        ================================= */
+
+        .form-box {
+            width: 90%;
+            max-width: 450px;
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .form-box input,
+        .form-box select {
+            width: 100%;
+            padding: 13px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #555;
+        }
+
+        .form-box button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+
+        /* ================================
+           COINS
+        ================================= */
+
+        .coin-container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+        }
+
+        .coin-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .coin-card {
+            width: 200px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 15px;
+        }
+
+
+        /* ================================
+           PAYMENT
+        ================================= */
+
+        #paymentBox {
+            display: none;
+            width: 90%;
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        #paymentBox img {
+            max-width: 250px;
+            width: 100%;
+            margin: 15px auto;
+            display: block;
+        }
+
+        #paymentProof {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+
+        /* ================================
+           ROOMS
+        ================================= */
+
+        #roomsContainer,
+        #myRoomsContainer {
+            width: 90%;
+            max-width: 900px;
+            margin: 25px auto;
+        }
+
+        .room-card {
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 15px;
+        }
+
+
+        /* ================================
+           DASHBOARD
+        ================================= */
+
+        .dashboard-box {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+
+        /* ================================
+           WALLET
+        ================================= */
+
+        .wallet-header {
+            width: 90%;
+            max-width: 900px;
+            margin: 25px auto;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .wallet-header h1 {
+            font-size: 45px;
+            margin: 10px 0;
+        }
+
+        .wallet-panels {
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .wallet-panel {
+            display: none;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 15px;
+        }
+
+        .wallet-panel.active {
+            display: block;
+        }
+
+        .wallet-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wallet-buttons button {
+            padding: 12px 20px;
+            cursor: pointer;
+        }
+
+        .wallet-balance {
+            font-size: 18px;
+        }
+
+
+        /* ================================
+           WITHDRAWAL
+        ================================= */
+
+        #withdrawCoins,
+        #withdrawMethod,
+        #withdrawAccount {
+            width: 100%;
+            padding: 13px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #555;
+        }
+
+        #withdrawAmount {
+            font-size: 20px;
+        }
+
+
+        /* ================================
+           ROOM DETAILS
+        ================================= */
+
+        #roomDetailsContainer {
+            display: none;
+            width: 90%;
+            max-width: 600px;
+            margin: 25px auto;
+        }
+
+        .room-details-box {
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .room-detail-row {
+            padding: 12px 0;
+            border-bottom: 1px solid #555;
+        }
+
+        .room-detail-value {
+            float: right;
+            font-weight: bold;
+        }
+
+
+        /* ================================
+           SIDE MENU
+        ================================= */
+
+        #sideMenu {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 300px;
+            height: 100vh;
+            z-index: 9999;
+            transition: 0.3s;
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        #sideMenu.active {
+            left: 0;
+        }
+
+        #sideMenu button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        #sideMenuOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            z-index: 9998;
+        }
+
+        #sideMenuOverlay.active {
+            display: block;
+        }
+
+
+        /* ================================
+           HEADER
+        ================================= */
+
+        header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+        }
+
+        header button {
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+
+        /* ================================
+           DESKTOP POPUP
+        ================================= */
+
+        #desktopPopup {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 9999;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+
+        /* ================================
+           MOBILE
+        ================================= */
+
+        @media (max-width: 600px) {
+
+            .coin-card {
+                width: 100%;
+            }
+
+            .room-detail-value {
+                float: none;
+                display: block;
+                margin-top: 5px;
+            }
+
+            .dashboard-box {
+                padding: 15px;
+            }
+
+            .wallet-header {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     SIDE MENU
+========================================= -->
+
+<div id="sideMenu">
+
+    <button onclick="closeSideMenu()">
+        ✕ Close
+    </button>
+
+    <hr>
+
+    <h2>FF Battle Arena</h2>
+
+    <p id="menuUsername">
+        Guest
+    </p>
+
+    <p id="menuCoins">
+        🪙 0 Coins
+    </p>
+
+    <hr>
+
+    <button onclick="goHome()">
+        🏠 Home
+    </button>
+
+    <button onclick="showCoins()">
+        🪙 Buy Coins
+    </button>
+
+    <button onclick="openWalletMenu()">
+        💰 Wallet
+    </button>
+
+    <button onclick="showRooms()">
+        🎮 Rooms
+    </button>
+
+    <button onclick="openMyRooms()">
+        🔐 My Rooms
+    </button>
+
+    <button onclick="showDashboard()">
+        👤 My Account
+    </button>
+
+    <button onclick="goToLogin()">
+        🔑 Login
+    </button>
+
+    <button onclick="goToRegister()">
+        📝 Create Account
+    </button>
+
+    <button onclick="logoutUser()">
+        🚪 Logout
+    </button>
+
+</div>
+
+
+<div id="sideMenuOverlay"
+     onclick="closeSideMenu()">
+</div>
+
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header>
+
+    <button onclick="openSideMenu()">
+        ☰
+    </button>
+
+    <h2>
+        FF Battle Arena
+    </h2>
+
+</header>
+
+
+
+<!-- =========================================
+     HOME
+========================================= -->
+
+<section id="home" class="page-screen">
+
+    <div class="home-hero">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                🔥 FREE FIRE GAMING PLATFORM
+            </div>
+
+            <h1>
+                FF BATTLE
+                <span>ARENA</span>
+            </h1>
+
+            <h2>
+                Enter The Battle. <br>
+                <strong>Play • Compete • Win</strong>
+            </h2>
+
+            <p>
+                Buy coins, purchase Free Fire rooms
+                and join exciting battles.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button
+                    class="hero-primary"
+                    onclick="goToRegister()">
+
+                    📝 CREATE ACCOUNT
+
+                </button>
+
+                <button
+                    class="hero-secondary"
+                    onclick="goToLogin()">
+
+                    🔑 LOGIN
+
+                </button>
+
+            </div>
+
+            <button
+                class="rooms-button"
+                onclick="showRooms()">
+
+                🎮 VIEW BATTLE ROOMS
+                <span>→</span>
+
+            </button>
+
+        </div>
+
+
+        <!-- HERO GAMING CARD -->
+
+        <div class="hero-card">
+
+            <div class="hero-card-glow"></div>
+
+            <div class="hero-card-icon">
+                🎮
+            </div>
+
+            <h3>
+                BATTLE ARENA
+            </h3>
+
+            <p>
+                Your battle starts here.
+            </p>
+
+            <div class="hero-stats">
+
+                <div>
+                    <strong>🪙</strong>
+                    <span>COINS</span>
+                </div>
+
+                <div>
+                    <strong>🎮</strong>
+                    <span>ROOMS</span>
+                </div>
+
+                <div>
+                    <strong>🏆</strong>
+                    <span>BATTLES</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FEATURES -->
+
+    <div class="home-features">
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🪙
+            </div>
+
+            <h3>
+                BUY COINS
+            </h3>
+
+            <p>
+                Easily purchase coins
+                for your battles.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🎮
+            </div>
+
+            <h3>
+                JOIN ROOMS
+            </h3>
+
+            <p>
+                Purchase rooms and
+                enter the battle.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🏆
+            </div>
+
+            <h3>
+                BATTLE
+            </h3>
+
+            <p>
+                Get your room details
+                and play your match.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                💰
+            </div>
+
+            <h3>
+                WALLET
+            </h3>
+
+            <p>
+                Manage your coins and
+                withdrawal requests.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- HOW IT WORKS -->
+
+    <div class="how-section">
+
+        <div class="section-title">
+
+            <span>
+                HOW IT WORKS
+            </span>
+
+            <h2>
+                Start Your Battle
+            </h2>
+
+            <p>
+                Simple steps to enter the FF Battle Arena.
+            </p>
+
+        </div>
+
+
+        <div class="steps-container">
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    01
+                </div>
+
+                <h3>
+                    Create Account
+                </h3>
+
+                <p>
+                    Register your account
+                    and login.
+                </p>
+
+            </div>
+
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    02
+                </div>
+
+                <h3>
+                    Buy Coins
+                </h3>
+
+                <p>
+                    Select a coin package
+                    and submit payment proof.
+                </p>
+
+            </div>
+
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    03
+                </div>
+
+                <h3>
+                    Purchase Room
+                </h3>
+
+                <p>
+                    Use your coins to
+                    purchase a battle room.
+                </p>
+
+            </div>
+
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    04
+                </div>
+
+                <h3>
+                    Enter Battle
+                </h3>
+
+                <p>
+                    Get your room details
+                    and join the match.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     REGISTER
+========================================= -->
+
+<section id="register"
+         class="page-screen">
+
+    <div class="form-box">
+
+        <h2>
+            📝 CREATE ACCOUNT
+        </h2>
+
+        <input
+            type="text"
+            id="username"
+            placeholder="Username"
+        >
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Email"
+        >
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+        >
+
+        <button onclick="registerUser()">
+            CREATE ACCOUNT
+        </button>
+
+        <p id="registerMessage"></p>
+
+        <button onclick="goToLogin()">
+            Already have an account? Login
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     LOGIN
+========================================= -->
+
+<section id="login"
+         class="page-screen">
+
+    <div class="form-box">
+
+        <h2>
+            🔑 LOGIN
+        </h2>
+
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="Email"
+        >
+
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="Password"
+        >
+
+        <button onclick="loginUser()">
+            LOGIN
+        </button>
+
+        <p id="loginMessage"></p>
+
+        <button onclick="goToRegister()">
+            Create New Account
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     COINS
+========================================= -->
+
+<section id="coins"
+         class="page-screen">
+
+    <div class="coin-container">
+
+        <h1>
+            🪙 BUY COINS
+        </h1>
+
+        <p>
+            Select your coin package.
+        </p>
+
+
+        <div class="coin-cards">
+
+
+            <div class="coin-card">
+
+                <h2>
+                    🪙 10 Coins
+                </h2>
+
+                <h3>
+                    Rs 50
+                </h3>
+
+                <button onclick="buyCoins(10)">
+                    BUY 10 COINS
+                </button>
+
+            </div>
+
+
+            <div class="coin-card">
+
+                <h2>
+                    🪙 20 Coins
+                </h2>
+
+                <h3>
+                    Rs 100
+                </h3>
+
+                <button onclick="buyCoins(20)">
+                    BUY 20 COINS
+                </button>
+
+            </div>
+
+
+            <div class="coin-card">
+
+                <h2>
+                    🪙 30 Coins
+                </h2>
+
+                <h3>
+                    Rs 125
+                </h3>
+
+                <button onclick="buyCoins(30)">
+                    BUY 30 COINS
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <p id="coinMessage"></p>
+
+
+        <!-- PAYMENT BOX -->
+
+        <div id="paymentBox">
+
+            <h2>
+                💳 PAYMENT
+            </h2>
+
+            <h3 id="selectedPackage">
+                Select a package first.
+            </h3>
+
+            <hr>
+
+            <h3>
+                JazzCash
+            </h3>
+
+            <p>
+                Number:
+                <strong>
+                    03053049328
+                </strong>
+            </p>
+
+            <p>
+                IBAN:
+                <strong>
+                    PK96JCMA1304923053049328
+                </strong>
+            </p>
+
+            <hr>
+
+            <h3>
+                Easypaisa
+            </h3>
+
+            <p>
+                Number:
+                <strong>
+                    03235345327
+                </strong>
+            </p>
+
+            <hr>
+
+            <h3>
+                📸 Upload Payment Screenshot
+            </h3>
+
+            <input
+                type="file"
+                id="paymentProof"
+                accept="image/*"
+            >
+
+            <button onclick="submitPaymentProof()">
+                SUBMIT PAYMENT PROOF
+            </button>
+
+            <p id="paymentProofMessage"></p>
+
+            <button onclick="closePaymentBox()">
+                CLOSE
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     ROOMS
+========================================= -->
+
+<section id="rooms"
+         class="page-screen">
+
+    <div style="
+        width:90%;
+        max-width:900px;
+        margin:30px auto;
+    ">
+
+        <h1>
+            🎮 FREE FIRE ROOMS
+        </h1>
+
+        <p>
+            Available rooms:
+        </p>
+
+    </div>
+
+    <div id="roomsContainer">
+
+        <p>
+            Loading rooms...
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     DASHBOARD
+========================================= -->
+
+<section id="dashboard"
+         class="page-screen">
+
+    <div class="dashboard-box">
+
+        <h1>
+            👤 MY ACCOUNT
+        </h1>
+
+        <hr>
+
+        <h3>
+            Username
+        </h3>
+
+        <p id="accountUsername">
+            -
+        </p>
+
+        <h3>
+            🪙 Coins
+        </h3>
+
+        <p id="accountCoins">
+            0
+        </p>
+
+        <hr>
+
+
+        <!-- =================================
+             WALLET
+        ================================== -->
+
+        <div class="wallet-header">
+
+            <h2>
+                💰 WALLET
+            </h2>
+
+            <h1>
+                🪙
+                <span id="walletCoinsBig">
+                    0
+                </span>
+            </h1>
+
+            <p class="wallet-balance">
+                Balance:
+                <strong>
+                    <span id="walletCoins">
+                        0
+                    </span>
+                    Coins
+                </strong>
+            </p>
+
+
+            <div class="wallet-buttons">
+
+                <button
+                    id="walletCoinsButton"
+                    onclick="openWallet('coins')">
+
+                    🪙 Deposit
+
+                </button>
+
+
+                <button
+                    id="walletWithdrawalButton"
+                    onclick="openWallet('withdrawal')">
+
+                    💸 Withdrawal
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================
+             WALLET PANELS
+        ================================== -->
+
+        <div class="wallet-panels">
+
+
+            <!-- DEPOSIT -->
+
+            <div
+                id="walletCoinsPanel"
+                class="wallet-panel">
+
+                <h3>
+                    🪙 BUY COINS
+                </h3>
+
+                <p>
+                    Coins add karne ke liye package
+                    select karein.
+                </p>
+
+                <button onclick="showCoins()">
+                    🪙 BUY COINS
+                </button>
+
+            </div>
+
+
+
+            <!-- WITHDRAWAL -->
+
+            <div
+                id="walletWithdrawalPanel"
+                class="wallet-panel">
+
+                <h3>
+                    💸 WITHDRAW COINS
+                </h3>
+
+                <p>
+                    Rate:
+                    <strong>
+                        1 Coin = Rs 3
+                    </strong>
+                </p>
+
+
+                <label>
+                    Coins:
+                </label>
+
+                <input
+                    type="number"
+                    id="withdrawCoins"
+                    placeholder="Enter Coins"
+                    min="1"
+                    oninput="calculateWithdrawal()"
+                >
+
+
+                <p>
+                    Amount:
+                    <strong id="withdrawAmount">
+                        Rs 0
+                    </strong>
+                </p>
+
+
+                <select id="withdrawMethod">
+
+                    <option value="">
+                        Select Method
+                    </option>
+
+                    <option value="JazzCash">
+                        JazzCash
+                    </option>
+
+                    <option value="Easypaisa">
+                        Easypaisa
+                    </option>
+
+                </select>
+
+
+                <input
+                    type="text"
+                    id="withdrawAccount"
+                    placeholder="Account Number"
+                >
+
+
+                <button onclick="submitWithdrawal()">
+                    SUBMIT WITHDRAWAL
+                </button>
+
+
+                <p id="withdrawalMessage"></p>
+                <div id="withdrawalHistory" style="
+    margin-top:25px;
+    padding:20px;
+    background:#0d1421;
+    border:1px solid #273449;
+    border-radius:12px;
+">
+
+    <h3 style="
+        color:#fbbf24;
+        margin-bottom:15px;
+    ">
+        📋 Withdrawal History
+    </h3>
+
+    <div id="withdrawalHistoryList">
+        Withdrawal history loading...
+    </div>
+
+</div>
+
+            </div>
+
+        </div>
+
+
+        <hr>
+
+
+        <!-- =================================
+             MY ROOMS
+        ================================== -->
+
+        <div id="myRoomsContainer">
+
+            <h3>
+                MY PURCHASED ROOMS
+            </h3>
+
+            <p>
+                Login karke apne purchased rooms
+                dekho.
+            </p>
+
+        </div>
+
+
+        <!-- =================================
+             ROOM DETAILS
+        ================================== -->
+
+        <div id="roomDetailsContainer">
+        </div>
+
+
+        <br>
+
+
+        <button onclick="showRooms()">
+            🎮 BUY / VIEW ROOMS
+        </button>
+
+
+        <button onclick="logoutUser()">
+            🚪 LOGOUT
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     DESKTOP POPUP
+========================================= -->
+
+<div id="desktopPopup"
+     style="display:none;">
+
+    <h3>
+        FF Battle Arena
+    </h3>
+
+    <button onclick="addToDesktop()">
+        ADD TO DESKTOP
+    </button>
+
+    <button onclick="closeDesktopPopup()">
+        CLOSE
+    </button>
+
+</div>
+
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+let currentUserId = null;
+
+let selectedCoins = null;
+
+
+/* =================================
+   COIN PRICES
+================================= */
+
+const coinPrices = {
+
+    10: 50,
+
+    20: 100,
+
+    30: 125
+
+};
+
+
+/* =================================
+   WITHDRAWAL RATE
+================================= */
+
+const withdrawalRate = 3;
+
+
+/* =================================
+   SAFE ELEMENT
+================================= */
+
+function getElement(id) {
+
+    return document.getElementById(id);
+
+}
+
+
+/* =================================
+   SIDE MENU
+================================= */
+
+function openSideMenu() {
+
+    const menu =
+        getElement("sideMenu");
+
+    const overlay =
+        getElement("sideMenuOverlay");
+
+
+    if (menu) {
+
+        menu.classList.add("active");
+
+    }
+
+
+    if (overlay) {
+
+        overlay.classList.add("active");
+
+    }
+
+}
+
+
+function closeSideMenu() {
+
+    const menu =
+        getElement("sideMenu");
+
+    const overlay =
+        getElement("sideMenuOverlay");
+
+
+    if (menu) {
+
+        menu.classList.remove("active");
+
+    }
+
+
+    if (overlay) {
+
+        overlay.classList.remove("active");
+
+    }
+
+}
+
+
+/* =================================
+   MENU USER
+================================= */
+
+function updateMenuUser(username, coins) {
+
+    const menuUsername =
+        getElement("menuUsername");
+
+    const menuCoins =
+        getElement("menuCoins");
+
+
+    if (menuUsername) {
+
+        menuUsername.textContent =
+            username || "Guest";
+
+    }
+
+
+    if (menuCoins) {
+
+        menuCoins.textContent =
+            "🪙 " +
+            (Number(coins) || 0) +
+            " Coins";
+
+    }
+
+}
+
+
+/* =================================
+   UPDATE WALLET
+================================= */
+
+function updateWalletBalance(coins) {
+
+    const safeCoins =
+        Number(coins) || 0;
+
+
+    const walletCoins =
+        getElement("walletCoins");
+
+    const walletCoinsBig =
+        getElement("walletCoinsBig");
+
+    const accountCoins =
+        getElement("accountCoins");
+
+
+    if (walletCoins) {
+
+        walletCoins.textContent =
+            safeCoins;
+
+    }
+
+
+    if (walletCoinsBig) {
+
+        walletCoinsBig.textContent =
+            safeCoins;
+
+    }
+
+
+    if (accountCoins) {
+
+        accountCoins.textContent =
+            safeCoins;
+
+    }
+
+}
+
+
+/* =================================
+   HIDE ALL SCREENS
+================================= */
+
+function hideAllScreens() {
+
+    const screens = [
+
+        "home",
+        "register",
+        "login",
+        "coins",
+        "rooms",
+        "dashboard"
+
+    ];
+
+
+    screens.forEach(function(id) {
+
+        const element =
+            getElement(id);
+
+
+        if (element) {
+
+            element.style.display =
+                "none";
+
+        }
+
+    });
+
+}
+
+
+/* =================================
+   HOME
+================================= */
+
+function goHome() {
+
+    hideAllScreens();
+
+
+    const home =
+        getElement("home");
+
+
+    if (home) {
+
+        home.style.display =
+            "flex";
+
+    }
+
+
+    closeSideMenu();
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+/* =================================
+   LOGIN SCREEN
+================================= */
+
+function goToLogin() {
+
+    hideAllScreens();
+
+
+    const login =
+        getElement("login");
+
+
+    if (login) {
+
+        login.style.display =
+            "flex";
+
+    }
+
+
+    closeSideMenu();
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+/* =================================
+   REGISTER SCREEN
+================================= */
+
+function goToRegister() {
+
+    hideAllScreens();
+
+
+    const register =
+        getElement("register");
+
+
+    if (register) {
+
+        register.style.display =
+            "flex";
+
+    }
+
+
+    closeSideMenu();
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+/* =================================
+   SHOW COINS
+================================= */
+
+function showCoins() {
+
+    if (!currentUserId) {
+
+        goToLogin();
+
+        return;
+
+    }
+
+
+    hideAllScreens();
+
+
+    const coins =
+        getElement("coins");
+
+
+    if (coins) {
+
+        coins.style.display =
+            "block";
+
+    }
+
+
+    closeSideMenu();
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+/* =================================
+   SHOW ROOMS
+================================= */
+
+function showRooms() {
+
+    if (!currentUserId) {
+
+        goToLogin();
+
+        return;
+
+    }
+
+
+    hideAllScreens();
+
+
+    const rooms =
+        getElement("rooms");
+
+
+    if (rooms) {
+
+        rooms.style.display =
+            "block";
+
+    }
+
+
+    closeSideMenu();
+
+
+    loadRooms();
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+/* =================================
+   DASHBOARD
+================================= */
+
+function showDashboard() {
+
+    if (!currentUserId) {
+
+        goToLogin();
+
+        return;
+
+    }
+
+
+    hideAllScreens();
+
+
+    const dashboard =
+        getElement("dashboard");
+
+
+    if (dashboard) {
+
+        dashboard.style.display =
+            "block";
+
+    }
+
+
+    closeSideMenu();
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+/* =================================
+   MY ROOMS
+================================= */
+
+function openMyRooms() {
+
+    if (!currentUserId) {
+
+        closeSideMenu();
+
+        goToLogin();
+
+        return;
+
+    }
+
+
+    closeSideMenu();
+
+    showDashboard();
+
+
+    setTimeout(function() {
+
+        loadMyRooms();
+
+    }, 150);
+
+}
+
+
+/* =================================
+   WALLET
+================================= */
+
+function openWallet(panel) {
+
+    if (!currentUserId) {
+
+        goToLogin();
+
+        return;
+
+    }
+
+
+    showDashboard();
+
+
+    const panels = [
+
+        "coins",
+        "withdrawal"
+
+    ];
+
+
+    panels.forEach(function(item) {
+
+        const name =
+            item.charAt(0).toUpperCase() +
+            item.slice(1);
+
+
+        const panelElement =
+            getElement(
+                "wallet" +
+                name +
+                "Panel"
+            );
+
+
+        if (panelElement) {
+
+            panelElement.classList.remove(
+                "active"
+            );
+
+        }
+
+    });
+
+
+    const selectedName =
+        panel.charAt(0).toUpperCase() +
+        panel.slice(1);
+
+
+    const activePanel =
+        getElement(
+            "wallet" +
+            selectedName +
+            "Panel"
+        );
+
+
+    if (activePanel) {
+
+        activePanel.classList.add(
+            "active"
+        );
+
+    }
+if (panel === "withdrawal") {
+
+    loadWithdrawalHistory();
+
+}
+}
+
+
+/* =================================
+   WALLET MENU
+================================= */
+
+function openWalletMenu() {
+
+    if (!currentUserId) {
+
+        closeSideMenu();
+
+        goToLogin();
+
+        return;
+
+    }
+
+
+    closeSideMenu();
+
+    showDashboard();
+
+
+    setTimeout(function() {
+
+        openWallet("coins");
+
+    }, 150);
+
+}
+
+
+/* =================================
+   WITHDRAWAL CALCULATION
+================================= */
+
+function calculateWithdrawal() {
+
+    const input =
+        getElement("withdrawCoins");
+
+    const amount =
+        getElement("withdrawAmount");
+
+
+    if (!input || !amount) {
+
+        return;
+
+    }
+
+
+    let coins =
+        Number(input.value) || 0;
+
+
+    if (coins < 0) {
+
+        coins = 0;
+
+    }
+
+
+    const accountCoins =
+        Number(
+            getElement("accountCoins")
+                ? getElement("accountCoins").textContent
+                : 0
+        ) || 0;
+
+
+    if (coins > accountCoins) {
+
+        amount.textContent =
+            "Coins balance se zyada";
+
+        return;
+
+    }
+
+
+    const rupees =
+        coins * withdrawalRate;
+
+
+    amount.textContent =
+        "Rs " +
+        rupees.toLocaleString();
+
+}
+
+
+/* =================================
+   WITHDRAWAL
+================================= */
+
+async function submitWithdrawal() {
+
+    const coinsInput =
+        getElement("withdrawCoins");
+
+    const methodInput =
+        getElement("withdrawMethod");
+
+    const accountInput =
+        getElement("withdrawAccount");
+
+    const message =
+        getElement("withdrawalMessage");
+
+
+    if (!message) {
+        return;
+    }
+
+
+    if (!currentUserId) {
+
+        goToLogin();
+
+        return;
+    }
+
+
+    const coins =
+        Number(
+            coinsInput
+                ? coinsInput.value
+                : 0
+        ) || 0;
+
+
+    const method =
+        methodInput
+            ? methodInput.value
+            : "";
+
+
+    const account =
+        accountInput
+            ? accountInput.value.trim()
+            : "";
+
+
+    const currentCoins =
+        Number(
+            getElement("accountCoins")
+                ? getElement("accountCoins").textContent
+                : 0
+        ) || 0;
+
+
+    if (coins <= 0) {
+
+        message.textContent =
+            "Please coins enter karein.";
+
+        message.style.color =
+            "red";
+
+        return;
+    }
+
+
+    if (coins > currentCoins) {
+
+        message.textContent =
+            "Aapke wallet mein itne coins nahi hain.";
+
+        message.style.color =
+            "red";
+
+        return;
+    }
+
+
+    if (!method) {
+
+        message.textContent =
+            "JazzCash ya Easypaisa select karein.";
+
+        message.style.color =
+            "red";
+
+        return;
+    }
+
+
+    if (!account) {
+
+        message.textContent =
+            "Account number enter karein.";
+
+        message.style.color =
+            "red";
+
+        return;
+    }
+
+
+    const amount =
+        coins * withdrawalRate;
+
+
+    message.textContent =
+        "Withdrawal request submit ho rahi hai...";
+
+    message.style.color =
+        "#fbbf24";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/withdrawal",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    credentials:
+                        "same-origin",
+
+                    body:
+                        JSON.stringify({
+
+                            userId:
+                                currentUserId,
+
+                            coins:
+                                coins,
+
+                            amount:
+                                amount,
+
+                            method:
+                                method,
+
+                            account:
+                                account
+
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            message.textContent =
+                data.message ||
+                "Withdrawal request submit nahi ho saki.";
+
+            message.style.color =
+                "red";
+
+            return;
+        }
+
+
+        message.textContent =
+            data.message ||
+            "Withdrawal request successfully submit ho gayi.";
+
+        message.style.color =
+            "lime";
+
+
+        if (data.user) {
+
+            currentUserId =
+                data.user.id;
+
+            updateUserUI(
+                data.user
+            );
+
+        }
+loadWithdrawalHistory();
+
+        if (coinsInput) {
+            coinsInput.value = "";
+        }
+
+
+        if (methodInput) {
+            methodInput.value = "";
+        }
+
+
+        if (accountInput) {
+            accountInput.value = "";
+        }
+
+
+        const amountElement =
+            getElement("withdrawAmount");
+
+
+        if (amountElement) {
+
+            amountElement.textContent =
+                "Rs 0";
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Withdrawal error:",
+            error
+        );
+
+
+        message.textContent =
+            "Server se connection nahi ho raha.";
+
+        message.style.color =
+            "red";
+
+    }
+
+}
+
+
+/* =================================
+   REGISTER
+================================= */
+
+async function registerUser() {
+
+    const usernameElement =
+        getElement("username");
+
+    const emailElement =
+        getElement("email");
+
+    const passwordElement =
+        getElement("password");
+
+    const message =
+        getElement("registerMessage");
+
+
+    if (
+        !usernameElement ||
+        !emailElement ||
+        !passwordElement ||
+        !message
+    ) {
+
+        return;
+
+    }
+
+
+    const username =
+        usernameElement.value.trim();
+
+    const email =
+        emailElement.value.trim();
+
+    const password =
+        passwordElement.value;
+
+
+    if (!username ||
+        !email ||
+        !password) {
+
+        message.textContent =
+            "Please fill all fields.";
+
+        message.style.color =
+            "red";
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/register",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    credentials:
+                        "same-origin",
+
+                    body:
+                        JSON.stringify({
+                            username,
+                            email,
+                            password
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        message.textContent =
+            data.message ||
+            "Registration complete.";
+
+
+        message.style.color =
+            response.ok
+                ? "lime"
+                : "red";
+
+
+        if (response.ok) {
+
+            usernameElement.value = "";
+
+            emailElement.value = "";
+
+            passwordElement.value = "";
+
+
+            setTimeout(function() {
+
+                goToLogin();
+
+            }, 800);
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Register error:",
+            error
+        );
+
+
+        message.textContent =
+            "Server se connection nahi ho raha.";
+
+        message.style.color =
+            "red";
+
+    }
+
+}
+
+
+/* =================================
+   LOGIN
+================================= */
+
+async function loginUser() {
+
+    const emailElement =
+        getElement("loginEmail");
+
+    const passwordElement =
+        getElement("loginPassword");
+
+    const message =
+        getElement("loginMessage");
+
+
+    if (
+        !emailElement ||
+        !passwordElement ||
+        !message
+    ) {
+
+        return;
+
+    }
+
+
+    const email =
+        emailElement.value.trim();
+
+    const password =
+        passwordElement.value;
+
+
+    if (!email || !password) {
+
+        message.textContent =
+            "Please enter email and password.";
+
+        message.style.color =
+            "red";
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/login",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    credentials:
+                        "same-origin",
+
+                    body:
+                        JSON.stringify({
+                            email,
+                            password
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        message.textContent =
+            data.message ||
+            "Login complete.";
+
+
+        message.style.color =
+            response.ok
+                ? "lime"
+                : "red";
+
+
+        if (
+            response.ok &&
+            data.user
+        ) {
+
+            currentUserId =
+                data.user.id;
+
+
+            updateUserUI(
+                data.user
+            );
+
+
+            setTimeout(function() {
+
+                showCoins();
+
+            }, 500);
+
+
+            loadRooms();
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Login error:",
+            error
+        );
+
+
+        message.textContent =
+            "Server se connection nahi ho raha.";
+
+        message.style.color =
+            "red";
+
+    }
+
+}
+
+
+/* =================================
+   UPDATE USER UI
+================================= */
+
+function updateUserUI(user) {
+
+    if (!user) {
+
+        return;
+
+    }
+
+
+    const username =
+        user.username || "Guest";
+
+
+    const coins =
+        Number(user.coins) || 0;
+
+
+    const accountUsername =
+        getElement("accountUsername");
+
+
+    if (accountUsername) {
+
+        accountUsername.textContent =
+            username;
+
+    }
+
+
+    updateWalletBalance(coins);
+
+
+    updateMenuUser(
+        username,
+        coins
+    );
+
+}
+
+
+/* =================================
+   RESTORE SESSION
+================================= */
+
+async function restoreUserSession() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/me",
+                {
+
+                    method: "GET",
+
+                    credentials:
+                        "same-origin"
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            currentUserId = null;
+
+            updateMenuUser(
+                "Guest",
+                0
+            );
+
+            updateWalletBalance(0);
+
+            goHome();
+
+            return;
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            data &&
+            data.authenticated === true &&
+            data.user
+        ) {
+
+            currentUserId =
+                data.user.id;
+
+
+            updateUserUI(
+                data.user
+            );
+
+
+            showCoins();
+
+            loadRooms();
+
+        } else {
+
+            currentUserId = null;
+
+
+            updateMenuUser(
+                "Guest",
+                0
+            );
+
+
+            updateWalletBalance(0);
+
+
+            goHome();
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Session restore error:",
+            error
+        );
+
+
+        currentUserId = null;
+
+
+        updateMenuUser(
+            "Guest",
+            0
+        );
+
+
+        updateWalletBalance(0);
+
+
+        goHome();
+
+    }
+
+}
+
+
+/* =================================
+   LOGOUT
+================================= */
+
+async function logoutUser() {
+
+    try {
+
+        await fetch(
+            "/api/logout",
+            {
+
+                method: "POST",
+
+                credentials:
+                    "same-origin"
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+    }
+
+
+    currentUserId = null;
+
+    selectedCoins = null;
+
+
+    const accountUsername =
+        getElement("accountUsername");
+
+
+    const accountCoins =
+        getElement("accountCoins");
+
+
+    if (accountUsername) {
+
+        accountUsername.textContent =
+            "-";
+
+    }
+
+
+    if (accountCoins) {
+
+        accountCoins.textContent =
+            "0";
+
+    }
+
+
+    updateWalletBalance(0);
+
+
+    updateMenuUser(
+        "Guest",
+        0
+    );
+
+
+    const paymentBox =
+        getElement("paymentBox");
+
+
+    if (paymentBox) {
+
+        paymentBox.style.display =
+            "none";
+
+    }
+
+
+    goHome();
+
+}
+
+
+/* =================================
+   BUY COINS
+================================= */
+
+function buyCoins(coins) {
+
+    if (!currentUserId) {
+
+        goToLogin();
+
+        return;
+
+    }
+
+
+    const message =
+        getElement("coinMessage");
+
+    const paymentBox =
+        getElement("paymentBox");
+
+    const selectedPackage =
+        getElement("selectedPackage");
+
+
+    if (
+        !Object.prototype.hasOwnProperty.call(
+            coinPrices,
+            coins
+        )
+    ) {
+
+        if (message) {
+
+            message.textContent =
+                "Invalid coin package.";
+
+            message.style.color =
+                "red";
+
+        }
+
+        return;
+
+    }
+
+
+    selectedCoins =
+        coins;
+
+
+    const price =
+        coinPrices[coins];
+
+
+    if (selectedPackage) {
+
+        selectedPackage.textContent =
+            "🪙 Selected Package: " +
+            coins +
+            " Coins = Rs " +
+            price;
+
+    }
+
+
+    if (paymentBox) {
+
+        paymentBox.style.display =
+            "block";
+
+        paymentBox.scrollIntoView({
+
+            behavior: "smooth",
+
+            block: "center"
+
+        });
+
+    }
+
+
+    if (message) {
+
+        message.textContent =
+            "Payment details neeche show ho gaye hain.";
+
+        message.style.color =
+            "#22c55e";
+
+    }
+
+}
+
+
+/* =================================
+   PAYMENT PROOF
+================================= */
+
+async function submitPaymentProof() {
+
+    const fileInput =
+        getElement("paymentProof");
+
+    const message =
+        getElement("paymentProofMessage");
+
+
+    if (!currentUserId) {
+
+        goToLogin();
+
+        return;
+
+    }
+
+
+    if (!selectedCoins) {
+
+        message.textContent =
+            "Pehle coin package select karein.";
+
+        message.style.color =
+            "red";
+
+        return;
+
+    }
+
+
+    if (
+        !fileInput ||
+        !fileInput.files ||
+        !fileInput.files.length
+    ) {
+
+        message.textContent =
+            "Please payment screenshot select karein.";
+
+        message.style.color =
+            "red";
+
+        return;
+
+    }
+
+
+    const file =
+        fileInput.files[0];
+
+
+    if (!file.type.startsWith("image/")) {
+
+        message.textContent =
+            "Sirf image upload karein.";
+
+        message.style.color =
+            "red";
+
+        return;
+
+    }
+
+
+    if (file.size > 5 * 1024 * 1024) {
+
+        message.textContent =
+            "Image 5MB se kam honi chahiye.";
+
+        message.style.color =
+            "red";
+
+        return;
+
+    }
+
+
+    const formData =
+        new FormData();
+
+
+    formData.append(
+        "userId",
+        currentUserId
+    );
+
+
+    formData.append(
+        "coins",
+        selectedCoins
+    );
+
+
+    formData.append(
+        "proof",
+        file
+    );
+
+
+    message.textContent =
+        "Payment proof upload ho raha hai...";
+
+    message.style.color =
+        "#fbbf24";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/payment-proof",
+                {
+
+                    method: "POST",
+
+                    credentials:
+                        "same-origin",
+
+                    body:
+                        formData
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            message.textContent =
+                data.message ||
+                "Payment proof submit nahi ho saka.";
+
+            message.style.color =
+                "red";
+
+            return;
+
+        }
+
+
+        message.textContent =
+            data.message ||
+            "Payment proof successfully submit ho gaya.";
+
+        message.style.color =
+            "lime";
+
+
+        fileInput.value = "";
+
+
+        selectedCoins = null;
+
+
+        setTimeout(function() {
+
+            closePaymentBox();
+
+        }, 1500);
+
+
+    } catch (error) {
+
+        console.error(
+            "Payment proof error:",
+            error
+        );
+
+
+        message.textContent =
+            "Server se connection nahi ho raha.";
+
+        message.style.color =
+            "red";
+
+    }
+
+}
+
+
+/* =================================
+   CLOSE PAYMENT BOX
+================================= */
+
+function closePaymentBox() {
+
+    const paymentBox =
+        getElement("paymentBox");
+
+    const paymentProof =
+        getElement("paymentProof");
+
+    const message =
+        getElement("paymentProofMessage");
+
+
+    if (paymentBox) {
+
+        paymentBox.style.display =
+            "none";
+
+    }
+
+
+    if (paymentProof) {
+
+        paymentProof.value = "";
+
+    }
+
+
+    if (message) {
+
+        message.textContent = "";
+
+    }
+
+}
+
+
+/* =================================
+   LOAD ROOMS
+================================= */
+
+async function loadRooms() {
+
+    const container =
+        getElement("roomsContainer");
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        "<p>Loading rooms...</p>";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/rooms",
+                {
+
+                    method: "GET",
+
+                    credentials:
+                        "same-origin"
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            container.innerHTML =
+                "<p>" +
+                (
+                    data.message ||
+                    "Rooms load nahi ho sake."
+                ) +
+                "</p>";
+
+            return;
+
+        }
+
+
+        const rooms =
+            Array.isArray(data)
+                ? data
+                : data.rooms;
+
+
+        if (
+            !rooms ||
+            rooms.length === 0
+        ) {
+
+            container.innerHTML =
+                "<p>Abhi koi room available nahi hai.</p>";
+
+            return;
+
+        }
+
+
+        container.innerHTML = "";
+
+
+        rooms.forEach(function(room) {
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "room-card";
+
+
+            card.innerHTML = `
+
+                <h3>
+                    🎮 ${room.name}
+                </h3>
+
+                <p>
+                    Price:
+                    🪙 ${room.price} Coins
+                </p>
+
+                <p>
+                    Timing:
+                    ${room.timing || "TBA"}
+                </p>
+
+                <button
+                    onclick="purchaseRoom(${room.id})">
+
+                    🪙 PURCHASE ROOM
+
+                </button>
+
+            `;
+
+
+            container.appendChild(card);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Load rooms error:",
+            error
+        );
+
+
+        container.innerHTML =
+            "<p>Server se connection nahi ho raha.</p>";
+
+    }
+
+}
+
+
+/* =================================
+   PURCHASE ROOM
+================================= */
+
+async function purchaseRoom(roomId) {
+
+    if (!currentUserId) {
+
+        goToLogin();
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/purchase-room",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    credentials:
+                        "same-origin",
+
+                    body:
+                        JSON.stringify({
+
+                            userId:
+                                currentUserId,
+
+                            roomId:
+                                roomId
+
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Room purchase nahi ho saka."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            data.message ||
+            "Room successfully purchase ho gaya."
+        );
+
+
+        if (data.user) {
+
+            currentUserId =
+                data.user.id;
+
+
+            updateUserUI(
+                data.user
+            );
+
+        }
+
+
+        loadRooms();
+
+        loadMyRooms();
+
+
+    } catch (error) {
+
+        console.error(
+            "Purchase room error:",
+            error
+        );
+
+
+        alert(
+            "Server se connection nahi ho raha."
+        );
+
+    }
+
+}
+
+
+/* =================================
+   LOAD MY ROOMS
+================================= */
+
+async function loadMyRooms() {
+
+    if (!currentUserId) {
+
+        goToLogin();
+
+        return;
+
+    }
+
+
+    const container =
+        getElement(
+            "myRoomsContainer"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    container.innerHTML = `
+
+        <h3>
+            MY PURCHASED ROOMS
+        </h3>
+
+        <p>
+            Loading...
+        </p>
+
+    `;
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/my-rooms/" +
+                currentUserId,
+                {
+
+                    method: "GET",
+
+                    credentials:
+                        "same-origin"
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            container.innerHTML = `
+
+                <h3>
+                    MY PURCHASED ROOMS
+                </h3>
+
+                <p>
+                    ${
+                        data.message ||
+                        "Rooms load nahi ho sake."
+                    }
+                </p>
+
+            `;
+
+            return;
+
+        }
+
+
+        const rooms =
+            Array.isArray(data)
+                ? data
+                : data.rooms;
+
+
+        if (
+            !rooms ||
+            rooms.length === 0
+        ) {
+
+            container.innerHTML = `
+
+                <h3>
+                    MY PURCHASED ROOMS
+                </h3>
+
+                <p>
+                    Aapne abhi koi room purchase nahi kiya.
+                </p>
+
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML = `
+
+            <h3>
+                MY PURCHASED ROOMS
+            </h3>
+
+        `;
+
+
+        rooms.forEach(function(room) {
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "room-card";
+
+
+            const roomId =
+                room.room_id ||
+                room.id;
+
+
+            card.innerHTML = `
+
+                <h3>
+                    🎮 ${room.name}
+                </h3>
+
+                <p>
+                    Price:
+                    🪙 ${room.price} Coins
+                </p>
+
+                <p>
+                    Purchased:
+                    ${room.purchased_at || ""}
+                </p>
+
+                <button
+                    onclick="showRoomDetails(${roomId})">
+
+                    🔐 VIEW ROOM DETAILS
+
+                </button>
+
+            `;
+
+
+            container.appendChild(card);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "My rooms error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <h3>
+                MY PURCHASED ROOMS
+            </h3>
+
+            <p>
+                Server se connection nahi ho raha.
+            </p>
+
+        `;
+
+    }
+
+}
+
+
+/* =================================
+   ROOM DETAILS
+================================= */
+
+async function showRoomDetails(roomId) {
+
+    const container =
+        getElement(
+            "roomDetailsContainer"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/room-details/" +
+                roomId,
+                {
+
+                    method: "GET",
+
+                    credentials:
+                        "same-origin"
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        container.style.display =
+            "block";
+
+
+        if (!response.ok) {
+
+            container.innerHTML = `
+
+                <div class="room-details-box">
+
+                    <h3>
+                        ROOM DETAILS
+                    </h3>
+
+                    <p>
+                        ${
+                            data.message ||
+                            "Room details available nahi hain."
+                        }
+                    </p>
+
+                    <button
+                        onclick="closeRoomDetails()">
+
+                        CLOSE
+
+                    </button>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML = `
+
+            <div class="room-details-box">
+
+                <h3>
+                    🎮 ${data.room.name}
+                </h3>
+
+                <div class="room-detail-row">
+
+                    ROOM ID:
+
+                    <span class="room-detail-value">
+                        ${data.roomId}
+                    </span>
+
+                </div>
+
+                <div class="room-detail-row">
+
+                    PASSWORD:
+
+                    <span class="room-detail-value">
+                        ${data.password}
+                    </span>
+
+                </div>
+
+                <div class="room-detail-row">
+
+                    TIMING:
+
+                    <span class="room-detail-value">
+                        ${data.timing}
+                    </span>
+
+                </div>
+
+                <button
+                    onclick="closeRoomDetails()">
+
+                    CLOSE
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        container.scrollIntoView({
+
+            behavior: "smooth",
+
+            block: "center"
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Room details error:",
+            error
+        );
+
+
+        container.style.display =
+            "block";
+
+
+        container.innerHTML = `
+
+            <div class="room-details-box">
+
+                <h3>
+                    ROOM DETAILS
+                </h3>
+
+                <p>
+                    Server se connection nahi ho raha.
+                </p>
+
+                <button
+                    onclick="closeRoomDetails()">
+
+                    CLOSE
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =================================
+   CLOSE ROOM DETAILS
+================================= */
+
+function closeRoomDetails() {
+
+    const container =
+        getElement(
+            "roomDetailsContainer"
+        );
+
+
+    if (container) {
+
+        container.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =================================
+   DESKTOP
+================================= */
+
+function closeDesktopPopup() {
+
+    const popup =
+        getElement("desktopPopup");
+
+
+    if (popup) {
+
+        popup.style.display =
+            "none";
+
+    }
+
+}
+
+
+function addToDesktop() {
+
+    alert(
+        "Browser menu se Install ya Add to Home Screen option use karein."
+    );
+
+
+    closeDesktopPopup();
+
+}
+
+
+/* =================================
+   PAGE START
+================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        hideAllScreens();
+
+
+        const home =
+            getElement("home");
+
+
+        if (home) {
+
+            home.style.display =
+                "flex";
+
+        }
+
+
+        updateMenuUser(
+            "Guest",
+            0
+        );
+
+
+        updateWalletBalance(
+            0
+        );
+
+
+        restoreUserSession();
+
+    }
+);
+/* ==================================================
+   WITHDRAWAL HISTORY
+================================================== */
+
+async function loadWithdrawalHistory() {
+
+    const box =
+        document.getElementById(
+            "withdrawalHistoryList"
+        );
+
+    if (!box) {
+        return;
+    }
+
+    box.innerHTML =
+        "Withdrawal history loading...";
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/my-withdrawals",
+                {
+                    credentials:
+                        "same-origin"
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            box.innerHTML = `
+                <p style="color:#ef4444;">
+                    ${data.message ||
+                    "Withdrawal history load nahi ho rahi."}
+                </p>
+            `;
+
+            return;
+        }
+
+        if (
+            !data.withdrawals ||
+            data.withdrawals.length === 0
+        ) {
+
+            box.innerHTML = `
+                <p style="color:#94a3b8;">
+                    Abhi koi withdrawal history nahi hai.
+                </p>
+            `;
+
+            return;
+        }
+
+        let html = "";
+
+        data.withdrawals.forEach(
+            function (withdrawal) {
+
+                let statusColor =
+                    "#fbbf24";
+
+                if (
+                    withdrawal.status ===
+                    "approved"
+                ) {
+                    statusColor =
+                        "#22c55e";
+                }
+
+                if (
+                    withdrawal.status ===
+                    "rejected"
+                ) {
+                    statusColor =
+                        "#ef4444";
+                }
+
+                html += `
+                    <div style="
+                        padding:15px;
+                        margin-bottom:12px;
+                        background:#080b12;
+                        border:1px solid #273449;
+                        border-radius:10px;
+                    ">
+
+                        <div style="
+                            display:flex;
+                            justify-content:space-between;
+                            gap:10px;
+                            flex-wrap:wrap;
+                        ">
+
+                            <strong>
+                                💸 Withdrawal #${withdrawal.id}
+                            </strong>
+
+                            <strong style="
+                                color:${statusColor};
+                                text-transform:uppercase;
+                            ">
+                                ${withdrawal.status}
+                            </strong>
+
+                        </div>
+
+                        <p style="
+                            margin-top:10px;
+                            color:#94a3b8;
+                        ">
+                            Amount:
+                            <strong style="color:#22c55e;">
+                                Rs ${withdrawal.amount}
+                            </strong>
+                        </p>
+
+                        <p style="
+                            margin-top:6px;
+                            color:#94a3b8;
+                        ">
+                            Method:
+                            <strong style="color:white;">
+                                ${withdrawal.method}
+                            </strong>
+                        </p>
+
+                        <p style="
+                            margin-top:6px;
+                            color:#94a3b8;
+                        ">
+                            Account:
+                            <strong style="color:white;">
+                                ${withdrawal.account_number}
+                            </strong>
+                        </p>
+
+                        <p style="
+                            margin-top:6px;
+                            color:#64748b;
+                            font-size:13px;
+                        ">
+                            Requested:
+                            ${withdrawal.requested_at}
+                        </p>
+
+                        ${
+                            withdrawal.processed_at
+                            ? `
+                                <p style="
+                                    margin-top:6px;
+                                    color:#64748b;
+                                    font-size:13px;
+                                ">
+                                    Processed:
+                                    ${withdrawal.processed_at}
+                                </p>
+                            `
+                            : ""
+                        }
+
+                    </div>
+                `;
+            }
+        );
+
+        box.innerHTML =
+            html;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Withdrawal history error:",
+            error
+        );
+
+        box.innerHTML = `
+            <p style="color:#ef4444;">
+                Server se connection nahi ho raha.
+            </p>
+        `;
+    }
+}
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,1965 @@
+/* ==================================================
+   FF BATTLE ARENA — PREMIUM GAMING DESIGN
+================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #05070d;
+    color: #ffffff;
+}
+
+
+/* ==================================================
+   HEADER
+================================================== */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 9000;
+
+    height: 72px;
+    padding: 0 25px;
+
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    background: rgba(5, 7, 13, 0.94);
+    border-bottom: 1px solid #252b38;
+
+    backdrop-filter: blur(12px);
+}
+
+header button {
+    margin: 0;
+    padding: 10px 15px;
+
+    border: 1px solid #343b4a;
+    border-radius: 9px;
+
+    background: #111722;
+    color: #ffffff;
+
+    font-size: 20px;
+    cursor: pointer;
+}
+
+header button:hover {
+    background: #1b2330;
+    border-color: #fbbf24;
+}
+
+header h2 {
+    margin: 0;
+
+    font-size: 21px;
+    letter-spacing: 1px;
+
+    color: #fbbf24;
+}
+
+
+/* ==================================================
+   SIDE MENU
+================================================== */
+
+#sideMenu {
+    position: fixed;
+    top: 0;
+    left: -320px;
+
+    width: 300px;
+    height: 100vh;
+
+    padding: 25px;
+
+    background: #090d15;
+    border-right: 1px solid #303746;
+
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.55);
+
+    transition: 0.3s ease;
+
+    z-index: 9999;
+
+    overflow-y: auto;
+}
+
+#sideMenu.active {
+    left: 0;
+}
+
+#sideMenu h2 {
+    color: #fbbf24;
+    margin-bottom: 5px;
+}
+
+#sideMenu p {
+    color: #94a3b8;
+}
+
+#sideMenu hr {
+    border: 0;
+    border-top: 1px solid #252c39;
+    margin: 20px 0;
+}
+
+#sideMenu button {
+    width: 100%;
+
+    margin: 7px 0;
+    padding: 13px;
+
+    border: 1px solid #293140;
+    border-radius: 9px;
+
+    background: #111722;
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+#sideMenu button:hover {
+    background: #171e2a;
+    border-color: #fbbf24;
+    color: #fbbf24;
+}
+
+#sideMenuOverlay {
+    position: fixed;
+    inset: 0;
+
+    display: none;
+
+    background: rgba(0, 0, 0, 0.72);
+
+    z-index: 9998;
+}
+
+#sideMenuOverlay.active {
+    display: block;
+}
+
+
+/* ==================================================
+   HOME HERO
+================================================== */
+
+#home {
+    min-height: calc(100vh - 72px);
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(251, 191, 36, 0.12),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 30%,
+            rgba(255, 120, 0, 0.10),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #05070d,
+            #090e18,
+            #05070d
+        );
+}
+
+.home-hero {
+    width: 92%;
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 80px 0 55px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.4fr)
+        minmax(300px, 0.7fr);
+
+    align-items: center;
+
+    gap: 60px;
+}
+
+
+/* ==================================================
+   HERO CONTENT
+================================================== */
+
+.hero-content {
+    text-align: left;
+}
+
+.hero-badge {
+    display: inline-block;
+
+    padding: 9px 15px;
+
+    border: 1px solid #4b3a12;
+    border-radius: 30px;
+
+    background: rgba(251, 191, 36, 0.08);
+
+    color: #fbbf24;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 20px;
+}
+
+.hero-content h1 {
+    margin: 0;
+
+    font-size: clamp(55px, 8vw, 100px);
+
+    line-height: 0.95;
+
+    letter-spacing: -4px;
+
+    font-weight: 900;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 30px rgba(255, 255, 255, 0.05);
+}
+
+.hero-content h1 span {
+    display: block;
+
+    color: #fbbf24;
+
+    text-shadow:
+        0 0 25px rgba(251, 191, 36, 0.25);
+}
+
+.hero-content h2 {
+    margin: 28px 0 15px;
+
+    font-size: clamp(24px, 4vw, 38px);
+
+    line-height: 1.15;
+
+    color: #e5e7eb;
+}
+
+.hero-content h2 strong {
+    color: #fbbf24;
+}
+
+.hero-content > p {
+    max-width: 580px;
+
+    margin: 0 0 28px;
+
+    color: #94a3b8;
+
+    font-size: 17px;
+
+    line-height: 1.7;
+}
+
+
+/* ==================================================
+   HERO BUTTONS
+================================================== */
+
+.hero-buttons {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+}
+
+.hero-buttons button,
+.rooms-button {
+    margin: 0;
+
+    padding: 14px 23px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.hero-primary {
+    border: 1px solid #fbbf24;
+
+    background: linear-gradient(
+        135deg,
+        #fbbf24,
+        #f59e0b
+    );
+
+    color: #111111;
+
+    box-shadow:
+        0 8px 25px rgba(251, 191, 36, 0.15);
+}
+
+.hero-primary:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 30px rgba(251, 191, 36, 0.25);
+}
+
+.hero-secondary {
+    border: 1px solid #374151;
+
+    background: #111722;
+
+    color: #ffffff;
+}
+
+.hero-secondary:hover {
+    transform: translateY(-3px);
+
+    border-color: #fbbf24;
+
+    color: #fbbf24;
+}
+
+.rooms-button {
+    margin-top: 14px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #94a3b8;
+}
+
+.rooms-button span {
+    margin-left: 8px;
+
+    color: #fbbf24;
+
+    font-size: 18px;
+}
+
+.rooms-button:hover {
+    color: #ffffff;
+}
+
+
+/* ==================================================
+   HERO CARD
+================================================== */
+
+.hero-card {
+    position: relative;
+
+    min-height: 330px;
+
+    padding: 35px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    overflow: hidden;
+
+    border: 1px solid #343b48;
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20, 26, 37, 0.96),
+            rgba(8, 12, 19, 0.96)
+        );
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.45);
+}
+
+.hero-card-glow {
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    top: -70px;
+    right: -50px;
+
+    border-radius: 50%;
+
+    background: rgba(251, 191, 36, 0.18);
+
+    filter: blur(45px);
+}
+
+.hero-card-icon {
+    position: relative;
+
+    width: 100px;
+    height: 100px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 25px;
+
+    background: #111722;
+
+    border: 1px solid #514114;
+
+    font-size: 50px;
+
+    box-shadow:
+        0 0 40px rgba(251, 191, 36, 0.10);
+}
+
+.hero-card h3 {
+    margin: 20px 0 5px;
+
+    color: #fbbf24;
+
+    font-size: 25px;
+
+    letter-spacing: 2px;
+}
+
+.hero-card p {
+    margin: 0;
+
+    color: #94a3b8;
+}
+
+.hero-stats {
+    width: 100%;
+
+    margin-top: 25px;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 8px;
+}
+
+.hero-stats div {
+    padding: 12px 5px;
+
+    border-radius: 10px;
+
+    background: #0c111a;
+
+    border: 1px solid #242c39;
+}
+
+.hero-stats strong {
+    display: block;
+
+    font-size: 20px;
+
+    margin-bottom: 5px;
+}
+
+.hero-stats span {
+    color: #64748b;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+
+/* ==================================================
+   FEATURES
+================================================== */
+
+.home-features {
+    width: 92%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 20px 0 75px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+}
+
+.feature-card {
+    padding: 25px;
+
+    border: 1px solid #252d3a;
+    border-radius: 16px;
+
+    background: #0c111a;
+
+    transition: 0.25s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+
+    border-color: #8a6918;
+
+    background: #101722;
+}
+
+.feature-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #151b25;
+
+    font-size: 22px;
+}
+
+.feature-card h3 {
+    margin: 18px 0 8px;
+
+    font-size: 15px;
+
+    letter-spacing: 1px;
+
+    color: #fbbf24;
+}
+
+.feature-card p {
+    margin: 0;
+
+    color: #718096;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* ==================================================
+   HOW IT WORKS
+================================================== */
+
+.how-section {
+    width: 92%;
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 20px 0 90px;
+}
+
+.section-title {
+    text-align: center;
+
+    margin-bottom: 40px;
+}
+
+.section-title span {
+    color: #fbbf24;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+}
+
+.section-title h2 {
+    margin: 10px 0;
+
+    font-size: 38px;
+}
+
+.section-title p {
+    color: #718096;
+}
+
+.steps-container {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+}
+
+.step-card {
+    position: relative;
+
+    padding: 28px;
+
+    border: 1px solid #252d3a;
+    border-radius: 16px;
+
+    background: #090e16;
+}
+
+.step-number {
+    margin-bottom: 25px;
+
+    color: #fbbf24;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+.step-card h3 {
+    margin: 0 0 10px;
+
+    font-size: 18px;
+}
+
+.step-card p {
+    margin: 0;
+
+    color: #718096;
+
+    line-height: 1.6;
+
+    font-size: 13px;
+}
+
+
+/* ==================================================
+   GENERAL BUTTON
+================================================== */
+
+button {
+    border: 0;
+    border-radius: 9px;
+
+    background: #fbbf24;
+    color: #111111;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+
+    background: #f59e0b;
+}
+
+
+/* ==================================================
+   FORMS
+================================================== */
+
+.page-screen {
+    min-height: 100vh;
+}
+
+.form-box {
+    width: 92%;
+    max-width: 450px;
+
+    margin: 70px auto;
+
+    padding: 30px;
+
+    border: 1px solid #293140;
+    border-radius: 18px;
+
+    background: #0c111a;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.form-box h2 {
+    margin-top: 0;
+
+    color: #fbbf24;
+}
+
+.form-box input,
+.form-box select {
+    width: 100%;
+
+    padding: 14px;
+
+    margin: 8px 0;
+
+    border: 1px solid #303846;
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #070b11;
+
+    color: #ffffff;
+}
+
+.form-box input:focus,
+.form-box select:focus {
+    border-color: #fbbf24;
+}
+
+.form-box button {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 10px;
+}
+
+
+/* ==================================================
+   COINS
+================================================== */
+
+.coin-container {
+    width: 92%;
+    max-width: 1000px;
+
+    margin: auto;
+
+    padding: 60px 0;
+}
+
+.coin-container > h1 {
+    color: #fbbf24;
+
+    font-size: 38px;
+}
+
+.coin-container > p {
+    color: #718096;
+}
+
+.coin-cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-top: 35px;
+}
+
+.coin-card {
+    padding: 28px 20px;
+
+    text-align: center;
+
+    border: 1px solid #293140;
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #101620,
+            #090e15
+        );
+
+    transition: 0.25s ease;
+}
+
+.coin-card:hover {
+    transform: translateY(-7px);
+
+    border-color: #9a7419;
+}
+
+.coin-card h2 {
+    color: #fbbf24;
+}
+
+.coin-card h3 {
+    font-size: 25px;
+}
+
+.coin-card button {
+    padding: 12px 18px;
+}
+
+
+/* ==================================================
+   PAYMENT BOX
+================================================== */
+
+#paymentBox {
+    padding: 28px;
+
+    border: 1px solid #3b321d;
+    border-radius: 18px;
+
+    background: #0b1018;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+#paymentBox h2 {
+    color: #fbbf24;
+}
+
+#paymentBox h3 {
+    color: #e5e7eb;
+}
+
+#paymentBox p {
+    color: #94a3b8;
+
+    line-height: 1.6;
+}
+
+#paymentBox strong {
+    color: #ffffff;
+}
+
+#paymentBox hr {
+    border: 0;
+
+    border-top: 1px solid #252d3a;
+
+    margin: 20px 0;
+}
+
+#paymentBox img {
+    border-radius: 12px;
+}
+
+
+/* ==================================================
+   ROOMS
+================================================== */
+
+#rooms {
+    padding: 35px 0;
+}
+
+#rooms > div:first-child {
+    padding-top: 20px;
+}
+
+#rooms h1 {
+    color: #fbbf24;
+}
+
+.room-card {
+    padding: 22px;
+
+    margin: 15px 0;
+
+    border: 1px solid #293140;
+    border-radius: 16px;
+
+    background: #0c111a;
+
+    transition: 0.2s ease;
+}
+
+.room-card:hover {
+    border-color: #806316;
+
+    transform: translateY(-2px);
+}
+
+.room-card h3 {
+    color: #fbbf24;
+}
+
+.room-card p {
+    color: #94a3b8;
+}
+
+.room-card button {
+    padding: 12px 18px;
+}
+
+
+/* ==================================================
+   DASHBOARD
+================================================== */
+
+.dashboard-box {
+    width: 92%;
+    max-width: 1000px;
+
+    margin: 40px auto;
+
+    padding: 30px;
+
+    border: 1px solid #293140;
+    border-radius: 20px;
+
+    background: #0a0f17;
+}
+
+.dashboard-box > h1 {
+    color: #fbbf24;
+}
+
+.dashboard-box hr {
+    border: 0;
+
+    border-top: 1px solid #252d3a;
+
+    margin: 25px 0;
+}
+
+
+/* ==================================================
+   WALLET
+================================================== */
+
+.wallet-header {
+    width: 100%;
+
+    margin: 25px 0;
+
+    padding: 30px;
+
+    border: 1px solid #3a301a;
+    border-radius: 20px;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(251, 191, 36, 0.12),
+            transparent 35%
+        ),
+        #0d131d;
+}
+
+.wallet-header h2 {
+    color: #fbbf24;
+}
+
+.wallet-header h1 {
+    font-size: 55px;
+
+    margin: 10px 0;
+}
+
+.wallet-balance {
+    color: #94a3b8;
+}
+
+.wallet-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+.wallet-buttons button {
+    padding: 13px 22px;
+}
+
+.wallet-panel {
+    padding: 25px;
+
+    border: 1px solid #293140;
+    border-radius: 16px;
+
+    background: #0c111a;
+}
+
+.wallet-panel h3 {
+    color: #fbbf24;
+}
+
+#withdrawCoins,
+#withdrawMethod,
+#withdrawAccount {
+    width: 100%;
+
+    padding: 14px;
+
+    margin: 8px 0;
+
+    border: 1px solid #303846;
+    border-radius: 9px;
+
+    background: #070b11;
+
+    color: #ffffff;
+
+    outline: none;
+}
+
+#withdrawCoins:focus,
+#withdrawMethod:focus,
+#withdrawAccount:focus {
+    border-color: #fbbf24;
+}
+
+#withdrawAmount {
+    color: #22c55e;
+}
+
+
+/* ==================================================
+   ROOM DETAILS
+================================================== */
+
+.room-details-box {
+    padding: 25px;
+
+    border: 1px solid #3a301a;
+    border-radius: 16px;
+
+    background: #0c111a;
+}
+
+.room-details-box h3 {
+    color: #fbbf24;
+}
+
+.room-detail-row {
+    padding: 14px 0;
+
+    border-bottom: 1px solid #252d3a;
+
+    color: #94a3b8;
+}
+
+.room-detail-value {
+    color: #ffffff;
+}
+
+
+/* ==================================================
+   WITHDRAWAL HISTORY
+================================================== */
+
+#withdrawalHistory {
+    background: #0a0f17 !important;
+
+    border-color: #293140 !important;
+}
+
+#withdrawalHistory h3 {
+    color: #fbbf24 !important;
+}
+
+
+/* ==================================================
+   DESKTOP POPUP
+================================================== */
+
+#desktopPopup {
+    padding: 22px;
+
+    border: 1px solid #3a301a;
+    border-radius: 16px;
+
+    background: #0c111a;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+#desktopPopup h3 {
+    color: #fbbf24;
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 850px) {
+
+    .home-hero {
+        grid-template-columns: 1fr;
+
+        gap: 40px;
+
+        padding-top: 55px;
+    }
+
+    .hero-content {
+        text-align: center;
+    }
+
+    .hero-content > p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .home-features,
+    .steps-container {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .coin-cards {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 0 15px;
+    }
+
+    header h2 {
+        font-size: 17px;
+    }
+
+    .home-hero {
+        width: 90%;
+
+        padding: 45px 0;
+    }
+
+    .hero-content h1 {
+        font-size: 54px;
+
+        letter-spacing: -2px;
+    }
+
+    .hero-content h2 {
+        font-size: 25px;
+    }
+
+    .hero-content > p {
+        font-size: 15px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .hero-buttons button {
+        width: 100%;
+    }
+
+    .rooms-button {
+        width: 100%;
+    }
+
+    .hero-card {
+        min-height: 290px;
+
+        padding: 25px;
+    }
+
+    .home-features,
+    .steps-container {
+        grid-template-columns: 1fr;
+    }
+
+    .home-features {
+        padding-bottom: 50px;
+    }
+
+    .dashboard-box {
+        width: 94%;
+
+        padding: 18px;
+    }
+
+    .wallet-header {
+        padding: 22px 15px;
+    }
+
+    .wallet-header h1 {
+        font-size: 45px;
+    }
+
+    .form-box {
+        padding: 22px;
+    }
+
+}
+/* =========================================
+   PREMIUM PAYMENT BOX
+========================================= */
+
+#paymentBox {
+    max-width: 650px;
+    margin: 30px auto;
+    padding: 28px;
+    border-radius: 22px;
+    background:
+        linear-gradient(145deg, rgba(18, 24, 38, 0.98), rgba(7, 10, 18, 0.98));
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.55),
+        0 0 30px rgba(251, 191, 36, 0.08);
+}
+
+#paymentBox h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #fbbf24;
+    font-size: 25px;
+    text-align: center;
+}
+
+#selectedPackage {
+    text-align: center;
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+/* Payment Information */
+
+#paymentBox p {
+    color: #cbd5e1;
+    line-height: 1.7;
+}
+
+#paymentBox strong {
+    color: #ffffff;
+}
+
+/* Payment Details Card */
+
+#paymentBox .payment-info,
+#paymentBox .payment-details {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    padding: 18px;
+    margin: 12px 0;
+}
+
+/* Screenshot Upload */
+
+#paymentProof {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border-radius: 12px;
+    border: 1px dashed rgba(251, 191, 36, 0.5);
+    background: rgba(0, 0, 0, 0.25);
+    color: #cbd5e1;
+    cursor: pointer;
+}
+
+#paymentProof:hover {
+    border-color: #fbbf24;
+}
+
+/* Submit Payment Button */
+
+#paymentBox button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    border: none;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #111827;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+#paymentBox button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(251, 191, 36, 0.25);
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    #paymentBox {
+        margin: 20px 10px;
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    #paymentBox h3 {
+        font-size: 21px;
+    }
+
+    #selectedPackage {
+        font-size: 16px;
+    }
+}
+/* =========================================
+   PREMIUM PAYMENT BOX
+========================================= */
+
+#paymentBox {
+    max-width: 650px;
+    margin: 30px auto;
+    padding: 28px;
+    border-radius: 22px;
+    background:
+        linear-gradient(145deg, rgba(18, 24, 38, 0.98), rgba(7, 10, 18, 0.98));
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.55),
+        0 0 30px rgba(251, 191, 36, 0.08);
+}
+
+#paymentBox h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #fbbf24;
+    font-size: 25px;
+    text-align: center;
+}
+
+#selectedPackage {
+    text-align: center;
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+/* Payment Information */
+
+#paymentBox p {
+    color: #cbd5e1;
+    line-height: 1.7;
+}
+
+#paymentBox strong {
+    color: #ffffff;
+}
+
+/* Payment Details Card */
+
+#paymentBox .payment-info,
+#paymentBox .payment-details {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    padding: 18px;
+    margin: 12px 0;
+}
+
+/* Screenshot Upload */
+
+#paymentProof {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border-radius: 12px;
+    border: 1px dashed rgba(251, 191, 36, 0.5);
+    background: rgba(0, 0, 0, 0.25);
+    color: #cbd5e1;
+    cursor: pointer;
+}
+
+#paymentProof:hover {
+    border-color: #fbbf24;
+}
+
+/* Submit Payment Button */
+
+#paymentBox button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    border: none;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #111827;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+#paymentBox button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(251, 191, 36, 0.25);
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    #paymentBox {
+        margin: 20px 10px;
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    #paymentBox h3 {
+        font-size: 21px;
+    }
+
+    #selectedPackage {
+        font-size: 16px;
+    }
+}
+/* =========================================
+   PREMIUM DASHBOARD + WALLET
+========================================= */
+
+#dashboard {
+    padding-bottom: 60px;
+}
+
+#dashboard h2 {
+    text-align: center;
+    color: #fbbf24;
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+/* Account Summary */
+
+#accountUsername,
+#accountCoins {
+    color: #ffffff;
+    font-weight: 800;
+}
+
+/* Wallet Main Box */
+
+#wallet {
+    max-width: 1000px;
+    margin: 25px auto;
+    padding: 28px;
+    border-radius: 22px;
+    background: linear-gradient(145deg, #111827, #070b13);
+    border: 1px solid rgba(251, 191, 36, 0.25);
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.45);
+}
+
+/* Wallet Balance */
+
+#walletCoinsBig {
+    font-size: 42px;
+    font-weight: 900;
+    color: #fbbf24;
+    text-shadow: 0 0 20px rgba(251, 191, 36, 0.18);
+}
+
+#walletCoins {
+    color: #cbd5e1;
+    font-size: 17px;
+}
+
+/* Wallet Buttons */
+
+#wallet button {
+    margin: 8px 5px 8px 0;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 11px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #111827;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+#wallet button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(251, 191, 36, 0.2);
+}
+
+/* Wallet Panels */
+
+#walletCoinsPanel,
+#walletWithdrawalPanel {
+    margin-top: 20px;
+    padding: 22px;
+    border-radius: 17px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Withdrawal */
+
+#withdrawAmount {
+    color: #fbbf24;
+    font-weight: 800;
+}
+
+#withdrawalMessage {
+    margin-top: 12px;
+    color: #fbbf24;
+    font-weight: 700;
+}
+
+/* Withdrawal History */
+
+#withdrawalHistory {
+    margin-top: 25px;
+}
+
+#withdrawalHistory h3 {
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+#withdrawalHistoryList {
+    display: grid;
+    gap: 12px;
+}
+
+/* My Rooms */
+
+#myRoomsContainer {
+    max-width: 1000px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+/* Room Details */
+
+#roomDetailsContainer {
+    max-width: 850px;
+    margin: 25px auto;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    #dashboard h2 {
+        font-size: 25px;
+    }
+
+    #wallet {
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    #walletCoinsBig {
+        font-size: 34px;
+    }
+
+    #myRoomsContainer {
+        grid-template-columns: 1fr;
+    }
+
+    #wallet button {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+/* =========================================
+   PREMIUM MY ROOMS + ROOM DETAILS
+========================================= */
+
+#myRoomsContainer {
+    width: 100%;
+    max-width: 1050px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* Purchased Room Card */
+
+#myRoomsContainer > div {
+    position: relative;
+    padding: 22px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #121a2b, #080c15);
+    border: 1px solid rgba(251, 191, 36, 0.22);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    transition: 0.25s ease;
+}
+
+#myRoomsContainer > div:hover {
+    transform: translateY(-5px);
+    border-color: rgba(251, 191, 36, 0.6);
+}
+
+#myRoomsContainer h3 {
+    color: #ffffff;
+    margin-top: 0;
+}
+
+#myRoomsContainer p {
+    color: #b7c0d1;
+    line-height: 1.6;
+}
+
+#myRoomsContainer strong {
+    color: #fbbf24;
+}
+
+/* Room Details */
+
+#roomDetailsContainer > div {
+    padding: 28px;
+    border-radius: 22px;
+    background: linear-gradient(145deg, #121a2b, #070b12);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.5);
+}
+
+#roomDetailsContainer h3 {
+    color: #fbbf24;
+    font-size: 25px;
+}
+
+#roomDetailsContainer p {
+    color: #cbd5e1;
+    line-height: 1.7;
+}
+
+/* Room Information */
+
+#roomDetailsContainer strong {
+    color: #ffffff;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    #myRoomsContainer {
+        grid-template-columns: 1fr;
+    }
+
+    #myRoomsContainer > div,
+    #roomDetailsContainer > div {
+        padding: 20px;
+    }
+
+    #roomDetailsContainer h3 {
+        font-size: 21px;
+    }
+}
+/* =========================================
+   PREMIUM LOGIN + REGISTER
+========================================= */
+
+#register,
+#login {
+    padding: 40px 15px 60px;
+}
+
+#register form,
+#login form {
+    width: 100%;
+    max-width: 450px;
+    margin: 25px auto;
+    padding: 30px;
+    border-radius: 22px;
+    background: linear-gradient(145deg, #121a2b, #070b13);
+    border: 1px solid rgba(251, 191, 36, 0.25);
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.5);
+}
+
+#register h2,
+#login h2 {
+    text-align: center;
+    color: #fbbf24;
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+#register input,
+#login input {
+    width: 100%;
+    padding: 14px 15px;
+    margin-bottom: 15px;
+    border-radius: 11px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    outline: none;
+    background: rgba(255, 255, 255, 0.045);
+    color: #ffffff;
+    font-size: 15px;
+    transition: 0.2s ease;
+}
+
+#register input:focus,
+#login input:focus {
+    border-color: #fbbf24;
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.08);
+}
+
+#register input::placeholder,
+#login input::placeholder {
+    color: #7f8ba0;
+}
+
+#register button,
+#login button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #111827;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+#register button:hover,
+#login button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(251, 191, 36, 0.22);
+}
+
+#registerMessage,
+#loginMessage {
+    max-width: 450px;
+    margin: 12px auto;
+    text-align: center;
+    color: #fbbf24;
+    font-weight: 700;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    #register,
+    #login {
+        padding-top: 25px;
+    }
+
+    #register form,
+    #login form {
+        padding: 22px;
+        border-radius: 18px;
+    }
+
+    #register h2,
+    #login h2 {
+        font-size: 25px;
+    }
+}
+/* =========================================
+   PREMIUM HEADER + SIDE MENU
+========================================= */
+
+header {
+    height: 68px;
+    padding: 0 20px;
+    background: rgba(5, 7, 13, 0.94);
+    border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(12px);
+}
+
+header h1 {
+    color: #fbbf24;
+    font-size: 21px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+}
+
+/* Hamburger */
+
+#menuBtn {
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    border-radius: 12px;
+    background: rgba(251, 191, 36, 0.08);
+    color: #fbbf24;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+#menuBtn:hover {
+    background: rgba(251, 191, 36, 0.16);
+    transform: scale(1.04);
+}
+
+/* Side Menu */
+
+#sideMenu {
+    background: linear-gradient(180deg, #0d1422, #050810);
+    border-right: 1px solid rgba(251, 191, 36, 0.2);
+    box-shadow: 15px 0 45px rgba(0, 0, 0, 0.5);
+}
+
+#sideMenu button {
+    width: calc(100% - 24px);
+    margin: 5px 12px;
+    padding: 13px 15px;
+    border: 1px solid transparent;
+    border-radius: 11px;
+    background: transparent;
+    color: #cbd5e1;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#sideMenu button:hover {
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.08);
+    border-color: rgba(251, 191, 36, 0.16);
+    transform: translateX(3px);
+}
+
+/* Overlay */
+
+#overlay {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(2px);
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 0 12px;
+    }
+
+    header h1 {
+        font-size: 18px;
+    }
+
+    #sideMenu {
+        width: 280px;
+    }
+}
+/* =========================================
+   FINAL RESPONSIVE POLISH
+========================================= */
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Better spacing for all sections */
+
+section {
+    width: 100%;
+}
+
+/* Prevent horizontal scrolling */
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Better mobile text */
+
+@media (max-width: 600px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    section {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    button {
+        min-height: 44px;
+    }
+
+    input,
+    select {
+        min-height: 44px;
+    }
+}
+
+/* Small phones */
+
+@media (max-width: 400px) {
+
+    header h1 {
+        font-size: 16px;
+    }
+
+    #menuBtn {
+        width: 40px;
+        height: 40px;
+        font-size: 19px;
+    }
+
+    .room-card {
+        padding: 18px;
+    }
+
+    #paymentBox {
+        padding: 17px;
+    }
+
+    #register form,
+    #login form {
+        padding: 18px;
+    }
+}
